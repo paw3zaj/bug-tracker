@@ -1,4 +1,4 @@
-package pl.zajaczkowski.bugtracker.issue;
+package pl.zajaczkowski.bugtracker.issue.enumes;
 
 public enum Priority {
     TRIVIAL("#FFFFE0"),             //LightYellow
