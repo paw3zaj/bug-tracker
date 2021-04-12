@@ -1,6 +1,6 @@
 package pl.zajaczkowski.bugtracker.issue;
 
-import pl.zajaczkowski.bugtracker.person.Person;
+import pl.zajaczkowski.bugtracker.auth.Person;
 
 import javax.persistence.*;
 import java.time.LocalDate;

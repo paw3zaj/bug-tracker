@@ -1,4 +1,4 @@
-package pl.zajaczkowski.bugtracker.person;
+package pl.zajaczkowski.bugtracker.auth;
 
 import javax.persistence.*;
 

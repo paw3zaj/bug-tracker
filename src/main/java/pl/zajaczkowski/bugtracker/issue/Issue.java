@@ -3,7 +3,7 @@ package pl.zajaczkowski.bugtracker.issue;
 import pl.zajaczkowski.bugtracker.issue.enumes.Priority;
 import pl.zajaczkowski.bugtracker.issue.enumes.Status;
 import pl.zajaczkowski.bugtracker.issue.enumes.Type;
-import pl.zajaczkowski.bugtracker.person.Person;
+import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.project.Project;
 
 import javax.persistence.*;
