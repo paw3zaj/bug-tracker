@@ -24,7 +24,7 @@ public class Person {
     private String userRealName;
     @Column(nullable = false, unique = true)
     private String email;
-    Integer phoneNumber;
+    private Integer phoneNumber;
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "person_authorities",
             joinColumns = @JoinColumn(name = "person_id"),
