@@ -1,7 +1,7 @@
-package pl.zajaczkowski.bugtracker.person.interfaces;
+package pl.zajaczkowski.bugtracker.auth.interfaces;
 
 import org.springframework.data.repository.CrudRepository;
-import pl.zajaczkowski.bugtracker.person.Person;
+import pl.zajaczkowski.bugtracker.auth.Person;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
 }
