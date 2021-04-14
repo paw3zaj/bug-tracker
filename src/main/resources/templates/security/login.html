@@ -7,11 +7,12 @@
 </head>
 <body>
 <div class="container">
-
   <div th:if="${param.error}" class="alert alert-danger">
     <span th:text="#{login.error}"></span>
   </div>
-
+  <div th:if="${param.logout}" class="alert alert-danger">
+    <span th:text="#{login.loggedOut}"></span>
+  </div>
   <form th:action="@{/login}" method="post" class="login-form">
     <h1 th:text="#{login.label}"/>
     <div class="form-group">
