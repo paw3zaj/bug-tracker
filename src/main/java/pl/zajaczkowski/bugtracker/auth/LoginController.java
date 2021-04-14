@@ -16,4 +16,9 @@ public class LoginController {
         return "index";
     }
 
+    @GetMapping("/about")
+    String about(){
+        return "about";
+    }
+
 }
