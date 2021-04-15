@@ -15,8 +15,6 @@ public class InitComponent implements InitializingBean {
     private final AuthorityRepository authorityRepository;
     private final PersonService personService;
 
-    private static final Logger LOG = LoggerFactory.getLogger(InitComponent.class);
-
     public InitComponent(AuthorityRepository authorityRepository, PersonService personService) {
         this.authorityRepository = authorityRepository;
         this.personService = personService;
@@ -25,7 +23,6 @@ public class InitComponent implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
 
-        LOG.info("Prepare of the application after launch");
         prepareAuthorities();
         personService.prepareAdminUser();
     }
