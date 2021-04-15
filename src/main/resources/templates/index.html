@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="shortcut icon" href="/images/pz.ico">
+</head>
+<body>
+<h1>Index</h1>
+
+<form th:action="@{/logout}" method="post" class="form-inline">
+    <input type="submit" th:value="#{login.logout}" class="btn btn-secondary"/>
+</form>
+
+</body>
+</html>

@@ -1,12 +1,16 @@
 package pl.zajaczkowski.bugtracker.auth;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @NoArgsConstructor
+@Setter
+@Getter
 @Entity
 public class Person {
 
@@ -19,10 +23,9 @@ public class Person {
     private String password;
     @Column(nullable = false)
     @ColumnDefault(value = "true")
-    Boolean enabled;
+    private Boolean enabled = true;
     @Column(nullable = false)
     private String userRealName;
-    @Column(nullable = false, unique = true)
     private String email;
     private Integer phoneNumber;
     @ManyToMany(cascade = CascadeType.MERGE)
@@ -31,13 +34,9 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities;
 
-    public Person(String login, String password, String userRealName
-            , String email, Integer phoneNumber, Set<Authority> authorities) {
+    public Person(String login, String password, String userRealName) {
         this.login = login;
         this.password = password;
         this.userRealName = userRealName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.authorities = authorities;
     }
 }
