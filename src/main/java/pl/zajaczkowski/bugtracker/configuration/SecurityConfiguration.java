@@ -13,21 +13,21 @@ import pl.zajaczkowski.bugtracker.auth.CustomUserDetailsService;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-//    private final CustomUserDetailsService customUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
-//    public SecurityConfiguration(CustomUserDetailsService customUserDetailsService) {
-//        this.customUserDetailsService = customUserDetailsService;
-//    }
+    public SecurityConfiguration(CustomUserDetailsService customUserDetailsService) {
+        this.customUserDetailsService = customUserDetailsService;
+    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(customUserDetailsService);
-//    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(customUserDetailsService);
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
