@@ -1,4 +1,4 @@
-package pl.zajaczkowski.bugtracker.auth;
+package pl.zajaczkowski.bugtracker.security;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,16 +9,6 @@ public class LoginController {
     @GetMapping("/login")
     String login() {
         return "security/login";
-    }
-
-    @GetMapping
-    String index() {
-        return "index";
-    }
-
-    @GetMapping("/about")
-    String about(){
-        return "about";
     }
 
 }
