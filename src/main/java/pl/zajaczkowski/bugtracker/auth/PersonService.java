@@ -3,6 +3,7 @@ package pl.zajaczkowski.bugtracker.auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.zajaczkowski.bugtracker.auth.interfaces.AuthorityRepository;
 import pl.zajaczkowski.bugtracker.auth.interfaces.PersonRepository;
@@ -13,6 +14,10 @@ import java.util.List;
 @Service
 public class PersonService {
 
+    private final PersonRepository personRepository;
+    private final AuthorityRepository authorityRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Value("${default.admin.name}")
     private String defaultAdminName;
     @Value("${default.admin.password}")
@@ -20,12 +25,10 @@ public class PersonService {
 
     private static final Logger LOG = LoggerFactory.getLogger(PersonService.class);
 
-    private final PersonRepository personRepository;
-    private final AuthorityRepository authorityRepository;
-
-    public PersonService(PersonRepository personRepository, AuthorityRepository authorityRepository) {
+    public PersonService(PersonRepository personRepository, AuthorityRepository authorityRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.personRepository = personRepository;
         this.authorityRepository = authorityRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public void prepareAdminUser() {
@@ -44,6 +47,9 @@ public class PersonService {
     }
 
     private void savePerson(Person person) {
+        String hashedPassword = bCryptPasswordEncoder.encode(person.getPassword());
+        person.setPassword(hashedPassword);
+
         personRepository.save(person);
     }
 }
