@@ -1,6 +1,9 @@
 # Bugtracker
 Praca dyplomowa (WSB)
 
+## Adres aplikacji
+https://pz-bug-tracker.herokuapp.com/
+
 ## Zmienne
 `default.admin.name`= admin (nazwa domyślnego administratora)\
 `default.admin.password`= pass (hasło domyślnego administratora)
