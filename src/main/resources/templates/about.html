@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/no_auth_layout}">
 <head>
-    <meta charset="UTF-8">
     <title th:text="#{about.label}"/>
-    <link rel="shortcut icon" href="/images/pz.ico">
 </head>
 <body>
+<div layout:fragment="main-content">
+    <p th:text="#{about.content}">
+</div>
 
-<h1>WSB Bugtracker</h1>
-<p>Aplikacja jest stworzona na potrzeby uzyskania dyplomu w WSB.</p>
-<p>Sytem ma za zadanie śledzić postęp prac, naprawe błedów w dowolnym projekcie.</p>
 </body>
 </html>
