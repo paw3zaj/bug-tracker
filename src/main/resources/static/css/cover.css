@@ -51,11 +51,3 @@ body {
   color: #fff;
   border-bottom-color: #fff;
 }
-
-.no-line {
-  text-decoration: none;
-}
-
-a:hover.un-line {
-  text-decoration: underline;
-}
