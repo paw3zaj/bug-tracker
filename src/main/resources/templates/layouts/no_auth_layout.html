@@ -5,7 +5,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:text="#{index.label}"/>
+    <title th:text="#{app.title}"/>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/">
     <!-- Bootstrap core CSS -->
@@ -13,6 +13,7 @@
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="../../static/css/cover.css" th:href="@{/css/cover.css}">
     <link rel="stylesheet" href="../../static/css/no_auth_layout.css" th:href="@{/css/no_auth_layout.css}">
+    <link rel="stylesheet" href="../../static/css/footer.css" th:href="@{/css/footer.css}">
     <link rel="shortcut icon" href="/images/pz.ico">
 </head>
 <body class="d-flex h-100 text-center text-white bg-dark">
@@ -21,7 +22,7 @@
         <div>
             <h3 class="float-md-start mb-0"><a href="layouts/no_auth_layout.html" th:href="@{/}" class="text-white no-line un-line">Bugtracker</a></h3>
             <nav class="nav nav-masthead justify-content-center float-md-end">
-                <a class="nav-link active" aria-current="page" href="security/login.html" th:href="@{/index}" th:text="#{login.label}">Sign in</a>
+                <a class="nav-link active" aria-current="page" href="dashboard.html" th:href="@{/dashboard}" th:text="#{login.label}">Sign in</a>
                 <a class="nav-link" href="security/signup.html" th:href="@{/signup}" th:text="#{login.signUp}">Sign up</a>
             </nav>
         </div>
