@@ -1,15 +1,13 @@
-package pl.zajaczkowski.bugtracker.component;
+package pl.zajaczkowski.bugtracker.configuration;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import pl.zajaczkowski.bugtracker.auth.Authority;
 import pl.zajaczkowski.bugtracker.auth.AuthorityName;
 import pl.zajaczkowski.bugtracker.auth.PersonService;
 import pl.zajaczkowski.bugtracker.auth.interfaces.AuthorityRepository;
 
-@Component
+@Service
 public class InitComponent implements InitializingBean {
 
     private final AuthorityRepository authorityRepository;

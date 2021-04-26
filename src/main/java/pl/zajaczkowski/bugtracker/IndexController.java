@@ -7,14 +7,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
-    @GetMapping("/")
+    @GetMapping("/dashboard")
     @Secured("ROLE_USER_TAB")
-    String index() {
-        return "index";
+    String dashboard() {
+        return "dashboard";
     }
 
     @GetMapping("/about")
     String about(){
         return "about";
+    }
+
+    @GetMapping("/")
+    String layout() {
+        return "layouts/no_auth_layout";
+    }
+
+    @GetMapping("/signup")
+    String signup() {
+        return "security/sign_up";
     }
 }
