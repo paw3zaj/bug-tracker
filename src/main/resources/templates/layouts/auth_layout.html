@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl" class="h-100" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
-
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,7 +53,7 @@
                                     <a class="nav-link dropdown-toggle active" aria-current="page" href="#"
                                        id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown"
                                        aria-expanded="false">
-                                        user
+                                        <span sec:authentication="name">user</span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-dark"
                                         aria-labelledby="navbarDarkDropdownMenuLink">
@@ -76,7 +76,6 @@
             </div>
         </nav>
     </header>
-
 
     <main class="px-3" layout:fragment="main-content">
     </main>
