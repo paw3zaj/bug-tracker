@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="pl" class="h-100" xmlns:th="http://www.thymeleaf.org"
+<html lang="pl" class="h-100"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:text="#{app.title}"/>
+    <title th:text="#{app.title}"></title>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
@@ -42,7 +43,8 @@
                                th:text="#{layout.menu.issues}" aria-disabled="true">Issues</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link un-line active" aria-current="page" href="#"
+                            <a class="nav-link un-line active" aria-current="page"
+                               href="person/persons.html" th:href="@{/persons}"
                                th:text="#{layout.menu.users}">Users</a>
                         </li>
                     </ul>
