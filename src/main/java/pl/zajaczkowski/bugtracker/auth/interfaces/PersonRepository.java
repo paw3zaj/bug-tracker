@@ -9,5 +9,5 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
 
     Person findByLogin(String login);
     Optional<Person> findById(Long id);
-    Iterable<Person> findAllByEnabledIsTrue();
+    Iterable<Person> findAllByEnabledIsTrueAndLoginNotLike(String superAdmin);
 }

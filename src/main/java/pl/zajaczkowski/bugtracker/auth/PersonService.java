@@ -55,7 +55,7 @@ public class PersonService {
     }
 
     Iterable<Person> findAllPersons() {
-        return personRepository.findAllByEnabledIsTrue();
+        return personRepository.findAllByEnabledIsTrueAndLoginNotLike(defaultAdminName);
     }
 
     void disabledPerson(Long id){
