@@ -33,10 +33,10 @@
             <td th:text="${{person.email}}">email</td>
             <td th:text="${{person.phoneNumber}}">phone</td>
             <td>
+                <a href="about" th:href="@{/persons/remove(id=${person.id})}" class="btn btn-lg btn-secondary fw-bold
+                 border-white bg-white un-line" th:text="#{person.remove}">remove person</a>
                 <a href="about" th:href="@{/persons/add}" class="btn btn-lg btn-secondary fw-bold
-                 border-white bg-white un-line" th:text="#{person.remove}">add person</a>
-                <a href="about" th:href="@{/persons/add}" class="btn btn-lg btn-secondary fw-bold
-                 border-white bg-white un-line" th:text="#{person.edit}">add person</a>
+                 border-white bg-white un-line" th:text="#{person.edit}">edit person</a>
             </td>
         </tr>
         </tbody>

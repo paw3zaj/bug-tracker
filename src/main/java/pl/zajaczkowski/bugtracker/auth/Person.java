@@ -39,4 +39,8 @@ public class Person {
         this.password = password;
         this.userRealName = userRealName;
     }
+
+    void isDisabled() {
+        this.enabled = false;
+    }
 }

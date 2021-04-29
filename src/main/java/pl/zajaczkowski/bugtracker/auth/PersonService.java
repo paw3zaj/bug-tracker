@@ -10,6 +10,7 @@ import pl.zajaczkowski.bugtracker.auth.interfaces.PersonRepository;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonService {
@@ -55,5 +56,13 @@ public class PersonService {
 
     Iterable<Person> findAllPersons() {
         return personRepository.findAllByEnabledIsTrue();
+    }
+
+    void disabledPerson(Long id){
+        Optional<Person> optionalPerson = personRepository.findById(id);
+        optionalPerson.ifPresent(person -> {
+            person.isDisabled();
+            personRepository.save(person);
+        });
     }
 }
