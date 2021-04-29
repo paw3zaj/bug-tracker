@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/auth_layout}">
+
+<body>
+
+<div layout:fragment="main-content">
+
+
+
+<!--    <a href="about" th:href="@{/persons/add}" class="justify-content-center float-md-end" th:text="#{person.add}">add person</a>-->
+
+        <a href="about" th:href="@{/persons/add}" class="btn btn-lg btn-secondary fw-bold
+         border-white bg-white un-line justify-content-center float-md-end" th:text="#{person.add}">add person</a>
+
+    <table class="table table-dark table-hover table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th th:text="#{person.user_real_name}">real name</th>
+            <th th:text="#{person.login}">login</th>
+            <th th:text="#{person.email}">email</th>
+            <th th:text="#{person.phone_number}">phone</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="person : ${persons}">
+            <td th:text="${personStat.count}">count</td>
+            <td th:text="${{person.userRealName}}">name</td>
+            <td th:text="${{person.login}}">login</td>
+            <td th:text="${{person.email}}">email</td>
+            <td th:text="${{person.phoneNumber}}">phone</td>
+            <td>
+                <a href="about" th:href="@{/persons/add}" class="btn btn-lg btn-secondary fw-bold
+                 border-white bg-white un-line" th:text="#{person.remove}">add person</a>
+                <a href="about" th:href="@{/persons/add}" class="btn btn-lg btn-secondary fw-bold
+                 border-white bg-white un-line" th:text="#{person.edit}">add person</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

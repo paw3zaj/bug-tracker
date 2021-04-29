@@ -52,4 +52,8 @@ public class PersonService {
 
         personRepository.save(person);
     }
+
+    Iterable<Person> findAllPersons() {
+        return personRepository.findAllByEnabledIsTrue();
+    }
 }

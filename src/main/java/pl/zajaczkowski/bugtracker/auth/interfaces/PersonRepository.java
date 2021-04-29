@@ -6,4 +6,5 @@ import pl.zajaczkowski.bugtracker.auth.Person;
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
     Person findByLogin(String login);
+    Iterable<Person> findAllByEnabledIsTrue();
 }
