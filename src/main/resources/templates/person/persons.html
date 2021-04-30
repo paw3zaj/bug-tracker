@@ -8,12 +8,16 @@
 
 <div layout:fragment="main-content">
 
-
-
-<!--    <a href="about" th:href="@{/persons/add}" class="justify-content-center float-md-end" th:text="#{person.add}">add person</a>-->
-
-        <a href="about" th:href="@{/persons/add}" class="btn btn-lg btn-secondary fw-bold
-         border-white bg-white un-line justify-content-center float-md-end" th:text="#{person.add}">add person</a>
+    <a href="about" th:href="@{/persons/add}" class="btn btn-lg btn-secondary fw-bold
+         border-white bg-white un-line justify-content-center float-md-end"
+       data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+             class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            <path fill-rule="evenodd"
+                  d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+        </svg>
+    </a>
 
     <table class="table table-dark table-hover table-striped">
         <thead>
@@ -33,10 +37,10 @@
             <td th:text="${{person.email}}">email</td>
             <td th:text="${{person.phoneNumber}}">phone</td>
             <td>
-                <a href="about" th:href="@{/persons/remove(id=${person.id})}" class="btn btn-lg btn-secondary fw-bold
-                 border-white bg-white un-line" th:text="#{person.remove}">remove person</a>
-                <a href="about" th:href="@{/persons/add}" class="btn btn-lg btn-secondary fw-bold
-                 border-white bg-white un-line" th:text="#{person.edit}">edit person</a>
+                <a href="about" th:href="@{/persons/remove(id=${person.id})}" class="btn-lg btn-secondary fw-bold
+                 border-white bg-white un-line no-line" th:text="#{person.remove}">remove person</a>
+                <a href="about" th:href="@{/persons/update}" class="btn-lg btn-secondary fw-bold
+                 border-white bg-white un-line no-line" th:text="#{person.edit}">edit person</a>
             </td>
         </tr>
         </tbody>
