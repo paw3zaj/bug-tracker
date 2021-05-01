@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/persons")
 public class PersonController {
@@ -29,7 +31,7 @@ public class PersonController {
     }
 
     @GetMapping("/add")
-    String addUser(Model model) {
+    String showAdd(Model model) {
         model.addAttribute("person", new Person());
         return "person/add";
     }
@@ -39,6 +41,26 @@ public class PersonController {
         if (!result.hasErrors()) {
             personsService.savePerson(person);
         }
+        return "redirect:/persons";
+    }
+
+    @GetMapping("/edit")
+    public String showUpdate(@RequestParam Long id, Model model) {
+        Optional<Person> optionalPerson = personsService.findById(id);
+        optionalPerson.ifPresentOrElse(
+                person -> model.addAttribute("person", person),
+                () -> new IllegalArgumentException("Invalid user Id:" + id));
+        return "person/update";
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@RequestParam Long id, Person person,
+                             BindingResult result) {
+        if (result.hasErrors()) {
+            person.setId(id);
+            return "person/update";
+        }
+        personsService.savePerson(person);
         return "redirect:/persons";
     }
 }

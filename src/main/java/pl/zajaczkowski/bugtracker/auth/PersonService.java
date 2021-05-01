@@ -58,6 +58,10 @@ public class PersonService {
         return personRepository.findAllByEnabledIsTrueAndLoginNotLike(defaultAdminName);
     }
 
+    Optional<Person> findById(Long id) {
+        return personRepository.findById(id);
+    }
+
     void disabledPerson(Long id){
         Optional<Person> optionalPerson = personRepository.findById(id);
         optionalPerson.ifPresent(person -> {
