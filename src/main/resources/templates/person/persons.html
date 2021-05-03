@@ -39,7 +39,7 @@
             <td>
                 <a href="about" th:href="@{/persons/remove(id=${person.id})}" class="btn-lg btn-secondary fw-bold
                  border-white bg-white un-line no-line" th:text="#{person.remove}">remove person</a>
-                <a href="about" th:href="@{/persons/update}" class="btn-lg btn-secondary fw-bold
+                <a href="about" th:href="@{/persons/edit(id=${person.id})}" class="btn-lg btn-secondary fw-bold
                  border-white bg-white un-line no-line" th:text="#{person.edit}">edit person</a>
             </td>
         </tr>
