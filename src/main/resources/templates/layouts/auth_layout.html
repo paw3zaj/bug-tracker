@@ -24,7 +24,7 @@
 <body class="d-flex h-100 text-center text-white bg-dark">
 <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="mb-auto">
-        <nav class="navbar navbar-expand-lg navbar-dark">
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand un-line" href="/dashboard.html" th:href="@{/dashboard}">Dashboard</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -57,7 +57,7 @@
                                        aria-expanded="false">
                                         <span sec:authentication="name">user</span>
                                     </a>
-                                    <ul class="dropdown-menu dropdown-menu-dark"
+                                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end"
                                         aria-labelledby="navbarDarkDropdownMenuLink">
                                         <li><a class="dropdown-item" href="#"
                                                th:text="#{layout.menu.user.settings}">settings</a></li>

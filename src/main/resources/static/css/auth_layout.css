@@ -9,3 +9,7 @@ a:hover.un-line {
 button:hover.un-line {
     text-decoration: underline;
 }
+
+body {
+    padding-top: 70px;
+}
