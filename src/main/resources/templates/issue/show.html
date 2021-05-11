@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{nav.issues}"></title>
+</head>
+<body>
+
+<section class="container">
+
+  <h3 th:text="#{nav.issues}" class="pb-3"></h3>
+
+  <div th:each="issue : ${issues}">
+    <span th:text="${issue.id}"></span>
+    <span th:text="${issue.project.name}"></span>
+    <span th:text="${issue.name}"></span>
+    <span th:if="${issue.assignee != null}" th:text="${issue.assignee.userRealName}"></span>
+
+  </div>
+</section>
+
+</body>
+</html>

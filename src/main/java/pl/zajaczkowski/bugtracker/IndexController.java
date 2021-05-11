@@ -27,4 +27,5 @@ public class IndexController {
     String signup() {
         return "security/sign_up";
     }
+
 }
