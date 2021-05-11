@@ -1,4 +1,4 @@
-package pl.zajaczkowski.bugtracker.auth.validators;
+package pl.zajaczkowski.bugtracker.validators;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -7,12 +7,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.TYPE, ElementType.FIELD})
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = LoginUniquenessValidator.class)
-public @interface UniqueLogin {
-    String message() default "{login.unique.error}";
-
+@Constraint(validatedBy = ValidPasswordsValidator.class)
+public @interface ValidPasswords {
+    String message() default "{passwords.not.valid.error}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

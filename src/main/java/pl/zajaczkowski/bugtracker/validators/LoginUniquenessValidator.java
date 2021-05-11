@@ -1,4 +1,4 @@
-package pl.zajaczkowski.bugtracker.auth.validators;
+package pl.zajaczkowski.bugtracker.validators;
 
 import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.auth.PersonService;
