@@ -1,8 +1,8 @@
 package pl.zajaczkowski.bugtracker.issue;
 
-import pl.zajaczkowski.bugtracker.issue.enumes.Priority;
-import pl.zajaczkowski.bugtracker.issue.enumes.Status;
-import pl.zajaczkowski.bugtracker.issue.enumes.Type;
+import pl.zajaczkowski.bugtracker.issue.enumes.PriorityName;
+import pl.zajaczkowski.bugtracker.issue.enumes.StatusName;
+import pl.zajaczkowski.bugtracker.issue.enumes.TypeName;
 import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.project.Project;
 
@@ -17,11 +17,11 @@ public class Issue {
     @GeneratedValue
     private Long id;
     @Column(nullable = false)
-    private Status status;
+    private StatusName statusName;
     @Column(nullable = false)
-    private Priority priority;
+    private PriorityName priorityName;
     @Column(nullable = false)
-    private Type type;
+    private TypeName typeName;
     @Column(nullable = false, unique = true, length = 100)
     private String name;
     private String description;

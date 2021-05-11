@@ -1,6 +1,6 @@
 package pl.zajaczkowski.bugtracker.issue.enumes;
 
-public enum Priority {
+public enum PriorityName {
     TRIVIAL("#FFFFE0"),             //LightYellow
     LOW ("#FFFF00"),                //Yellow
     MEDIUM ("#FFA500"),             //Orange
@@ -9,7 +9,7 @@ public enum Priority {
 
     private final String colour;
 
-    Priority(String colour) {
+    PriorityName(String colour) {
         this.colour = colour;
     }
 }

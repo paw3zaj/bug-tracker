@@ -1,5 +1,5 @@
 package pl.zajaczkowski.bugtracker.issue.enumes;
 
-public enum Type {
+public enum TypeName {
     FEATURE, BUG, CHORE
 }

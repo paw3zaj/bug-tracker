@@ -1,5 +1,5 @@
 package pl.zajaczkowski.bugtracker.issue.enumes;
 
-public enum Status {
+public enum StatusName {
     PENDING, WORKING, REJECTED, STACK, DONE, TESTING, ACCEPTED
 }
