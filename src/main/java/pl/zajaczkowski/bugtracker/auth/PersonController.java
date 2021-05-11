@@ -1,10 +1,13 @@
 package pl.zajaczkowski.bugtracker.auth;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -25,22 +28,27 @@ public class PersonController {
     }
 
     @GetMapping("/remove")
-    String removeUser(@RequestParam Long id){
+    String removeUser(@RequestParam Long id) {
         personsService.disabledPerson(id);
         return "redirect:/persons";
     }
 
     @GetMapping("/add")
+    @Secured("ROLE_MANAGE_USERS")
     String showAdd(Model model) {
+        Iterable<Authority> authorities = personsService.findAllAuthorities();
+        model.addAttribute("authorities", authorities);
         model.addAttribute("person", new Person());
         return "person/add";
     }
 
     @PostMapping("/addUser")
-    public String addUser(Person person, BindingResult result) {
-        if (!result.hasErrors()) {
-            personsService.savePerson(person);
+    @Secured("ROLE_MANAGE_USERS")
+    public String addUser(@Valid Person person, BindingResult result) {
+        if (result.hasErrors()) {
+            return "redirect:/add";
         }
+        personsService.savePerson(person);
         return "redirect:/persons";
     }
 
@@ -59,6 +67,26 @@ public class PersonController {
         if (result.hasErrors()) {
             person.setId(id);
             return "person/update";
+        }
+        personsService.savePerson(person);
+        return "redirect:/persons";
+    }
+
+    @GetMapping("/settings")
+    String showUserSettings(Principal principal, Model model) {
+        String login = principal.getName();
+        Optional<Person> optionalPerson = personsService.findPersonByLogin(login);
+        optionalPerson.ifPresentOrElse(
+                person -> model.addAttribute("person", person),
+                () -> new IllegalArgumentException("Invalid login")
+        );
+        return "user-settings";
+    }
+
+    @PostMapping("/change-settings")
+    public String changeUserSettings(Person person, BindingResult result) {
+        if (result.hasErrors()) {
+            return "user-settings";
         }
         personsService.savePerson(person);
         return "redirect:/persons";

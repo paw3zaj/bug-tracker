@@ -1,10 +1,12 @@
 package pl.zajaczkowski.bugtracker.auth;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
+@Getter
 @Entity
 public class Authority {
 
