@@ -33,17 +33,18 @@ public class PersonService {
     }
 
     public void prepareAdminUser() {
+        Optional<Person> optionalPerson = personRepository.findByLogin(defaultAdminName);
+        optionalPerson.ifPresentOrElse(person ->
+                        LOG.info("An administrator with the login name '{}' already exist.", person.getLogin()),
+                this::createDefaultAdminUser
+        );
+    }
 
-        if (personRepository.findByLogin(defaultAdminName) != null) {
-            LOG.info("An administrator with the name '{}' already exist.", defaultAdminName);
-            return; }
-
+    private void createDefaultAdminUser() {
         LOG.info("Create an administrator: {}", defaultAdminName);
-
         Person admin = new Person(defaultAdminName, defaultAdminPassword, "Administrator");
         List<Authority> authorities = (List<Authority>) authorityRepository.findAll();
         admin.setAuthorities(new HashSet<>(authorities));
-
         savePerson(admin);
     }
 
@@ -62,11 +63,19 @@ public class PersonService {
         return personRepository.findById(id);
     }
 
-    void disabledPerson(Long id){
-        Optional<Person> optionalPerson = personRepository.findById(id);
+    void disabledPerson(Long id) {
+        Optional<Person> optionalPerson = findById(id);
         optionalPerson.ifPresent(person -> {
             person.isDisabled();
             personRepository.save(person);
         });
+    }
+
+    public Optional<Person> findPersonByLogin(String name) {
+        return personRepository.findByLogin(name);
+    }
+
+    Iterable<Authority> findAllAuthorities() {
+        return authorityRepository.findAll();
     }
 }
