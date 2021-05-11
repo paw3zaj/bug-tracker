@@ -46,7 +46,7 @@ public class PersonController {
     @Secured("ROLE_MANAGE_USERS")
     public String addUser(@Valid Person person, BindingResult result) {
         if (result.hasErrors()) {
-            return "redirect:/add";
+            return "redirect:/persons/add";
         }
         personsService.savePerson(person);
         return "redirect:/persons";
