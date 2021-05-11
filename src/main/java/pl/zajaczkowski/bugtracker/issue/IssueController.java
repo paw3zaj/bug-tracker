@@ -19,6 +19,6 @@ public class IssueController {
     String showIssueList(Model model){
         Iterable<Issue> issues = issueService.findAll();
         model.addAttribute("issues", issues);
-        return "issue/show";
+        return "issue/issues";
     }
 }
