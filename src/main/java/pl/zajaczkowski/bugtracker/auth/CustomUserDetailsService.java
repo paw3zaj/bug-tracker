@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 import pl.zajaczkowski.bugtracker.auth.interfaces.PersonRepository;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -31,13 +28,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 
-        Person person = personRepository.findByLogin(login);
+        Optional<Person> optionalPerson = personRepository.findByLogin(login);
 
-        if(person == null) {
+        if(optionalPerson.isEmpty()) {
             LOG.info("Login error!!! Attempt to log into the system of a non-existent user: {}", login);
             throw new UsernameNotFoundException(login);
         }
-        return buildUserDetails(person);
+        return buildUserDetails(optionalPerson.get());
     }
 
     private UserDetails buildUserDetails(Person person) {

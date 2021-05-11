@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
-    Person findByLogin(String login);
-    Optional<Person> findById(Long id);
+    Optional<Person> findByLogin(String login);
     Iterable<Person> findAllByEnabledIsTrueAndLoginNotLike(String superAdmin);
 }
