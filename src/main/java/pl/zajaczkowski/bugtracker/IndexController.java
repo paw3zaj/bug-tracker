@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
 
     @GetMapping("/dashboard")
-    @Secured("ROLE_USER_TAB")
+    @Secured("ROLE_USERS_TAB")
     String dashboard() {
         return "dashboard";
     }
