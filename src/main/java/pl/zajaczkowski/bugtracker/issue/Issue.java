@@ -1,27 +1,23 @@
 package pl.zajaczkowski.bugtracker.issue;
 
-import pl.zajaczkowski.bugtracker.issue.enumes.Priority;
-import pl.zajaczkowski.bugtracker.issue.enumes.Status;
-import pl.zajaczkowski.bugtracker.issue.enumes.Type;
+import lombok.Getter;
+import lombok.Setter;
 import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.project.Project;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
+@Setter
+@Getter
 @Entity
 public class Issue {
 
     @Id
     @GeneratedValue
     private Long id;
-    @Column(nullable = false)
-    private Status status;
-    @Column(nullable = false)
-    private Priority priority;
-    @Column(nullable = false)
-    private Type type;
     @Column(nullable = false, unique = true, length = 100)
     private String name;
     private String description;
@@ -42,4 +38,21 @@ public class Issue {
     @OneToMany(mappedBy = "issue")
     private List<Comment> comments;
     private Double estimatedTime;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "issue_statuses",
+            joinColumns = @JoinColumn(name = "issue_id"),
+            inverseJoinColumns = @JoinColumn(name = "status_id"))
+    private Set<Status> statuses;
+    @ManyToOne
+    @JoinColumn(name = "priority_id")
+    private Priority priority;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "issue_types",
+            joinColumns = @JoinColumn(name = "issue_id"),
+            inverseJoinColumns = @JoinColumn(name = "type_id"))
+    private Set<Type> types;
+
+    public void setCreator(Person creator) {
+        this.creator = creator;
+    }
 }
