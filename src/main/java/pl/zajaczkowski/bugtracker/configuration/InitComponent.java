@@ -47,10 +47,9 @@ public class InitComponent implements InitializingBean {
 
     private void prepareAuthorities() {
         for (AuthorityName name : AuthorityName.values()) {
-            Authority existingAuthority = authorityRepository.findByName(name);
-            if (existingAuthority == null) {
+            Optional<Authority> existingAuthority = authorityRepository.findByName(name);
+            if (existingAuthority.isEmpty()) {
                 Authority authority = new Authority(name);
-
                 authorityRepository.save(authority);
             }
         }
