@@ -78,4 +78,8 @@ public class PersonService {
     Iterable<Authority> findAllAuthorities() {
         return authorityRepository.findAll();
     }
+
+    public String getDefaultAdminName() {
+        return defaultAdminName;
+    }
 }

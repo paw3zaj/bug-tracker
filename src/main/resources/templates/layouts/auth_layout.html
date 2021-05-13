@@ -35,15 +35,17 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link un-line disabled" tabindex="-1" href="#"
+                            <a class="nav-link un-line disabled" tabindex="-1"
+                               href="#"
                                th:text="#{layout.menu.projects}" aria-disabled="true">Projects</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link un-line disabled" tabindex="-1" href="#"
-                               th:text="#{layout.menu.issues}" aria-disabled="true">Issues</a>
+                            <a class="nav-link un-line active" tabindex="-1"
+                               href="issue/issues.html" th:href="@{/issues}"
+                               th:text="#{layout.menu.issues}">Issues</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link un-line active" aria-current="page"
+                            <a class="nav-link un-line" aria-current="page"
                                href="person/persons.html" th:href="@{/persons}"
                                th:text="#{layout.menu.users}">Users</a>
                         </li>
