@@ -51,4 +51,8 @@ public class Issue {
             joinColumns = @JoinColumn(name = "issue_id"),
             inverseJoinColumns = @JoinColumn(name = "type_id"))
     private Set<Type> types;
+
+    public void setCreator(Person creator) {
+        this.creator = creator;
+    }
 }

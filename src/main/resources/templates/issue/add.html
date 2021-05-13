@@ -14,22 +14,18 @@
     <br>
     <div class="form-group">
       <label th:text="#{issue.add.project}"> name </label>
-      <select th:field="*{project}">
+      <select th:field="*{project}" class="form-select" aria-label="Default select example">
         <option th:each="project : ${projects}"
                 th:value="${project.id}"
                 th:text="${project.name}"></option>
       </select>
     </div>
     <div class="form-group">
-      <label th:text="#{issue.add.creator}">creator</label>
-      <select th:field="*{creator}" class="form-select" aria-label="Default select example">
-        <option th:each="manager : ${managers}" th:value="${manager.id}" th:text="${manager.userRealName}">manager</option>
-      </select>
-    </div>
-    <div class="form-group">
       <label th:text="#{issue.add.assigne}">assignee</label>
       <select th:field="*{assignee}" class="form-select" aria-label="Default select example">
-        <option th:each="assignee : ${assignees}" th:value="${assignee.id}" th:text="${assignee.userRealName}">assigne</option>
+        <option th:each="assignee : ${assignees}"
+                th:value="${assignee.id}"
+                th:text="${assignee.userRealName}">assigne</option>
       </select>
     </div>
     <div class="form-group">

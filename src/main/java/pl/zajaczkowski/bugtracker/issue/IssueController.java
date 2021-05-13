@@ -12,6 +12,7 @@ import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.project.Project;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/issues")
@@ -45,10 +46,13 @@ public class IssueController {
 
     @PostMapping("/addIssue")
     @Secured("ROLE_MANAGE_PROJECT")
-    public String addIssue(@Valid Issue issue, BindingResult result) {
+    public String addIssue(@Valid Issue issue, BindingResult result, Principal principal) {
         if (result.hasErrors()) {
             return "redirect:/issues/add";
         }
+        var optionalUser = issueService.getLoggedUser(principal);
+        optionalUser.ifPresent(issue::setCreator);
+
         issueService.saveIssue(issue);
         return "redirect:/persons";
     }

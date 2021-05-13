@@ -14,6 +14,7 @@ import pl.zajaczkowski.bugtracker.issue.interfaces.TypeRepository;
 import pl.zajaczkowski.bugtracker.project.Project;
 import pl.zajaczkowski.bugtracker.project.interfaces.ProjectRepository;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Service
@@ -77,4 +78,7 @@ public class IssueService {
         return projectRepository.findAll();
     }
 
+    Optional<Person> getLoggedUser(Principal principal) {
+        return personRepository.findByLogin(principal.getName());
+    }
 }
