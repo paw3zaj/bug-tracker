@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/persons")
@@ -21,6 +20,7 @@ public class PersonController {
     }
 
     @GetMapping
+    @Secured("ROLE_MANAGE_USERS")
     String showPersonList(Model model) {
         Iterable<Person> personList = personsService.findAllPersons();
         model.addAttribute("persons", personList);
@@ -28,6 +28,7 @@ public class PersonController {
     }
 
     @GetMapping("/remove")
+    @Secured("ROLE_MANAGE_USERS")
     String removeUser(@RequestParam Long id) {
         personsService.disabledPerson(id);
         return "redirect:/persons";
@@ -36,54 +37,48 @@ public class PersonController {
     @GetMapping("/add")
     @Secured("ROLE_MANAGE_USERS")
     String showAdd(Model model) {
-        Iterable<Authority> authorities = personsService.findAllAuthorities();
-        model.addAttribute("authorities", authorities);
+        model.addAttribute("authorities", personsService.findAllAuthorities());
         model.addAttribute("person", new Person());
         return "person/add";
     }
 
-    @PostMapping("/addUser")
-    @Secured("ROLE_MANAGE_USERS")
-    public String addUser(@Valid Person person, BindingResult result) {
-        if (result.hasErrors()) {
-            return "redirect:/persons/add";
-        }
-        personsService.savePerson(person);
-        return "redirect:/persons";
-    }
-
     @GetMapping("/edit")
+    @Secured("ROLE_MANAGE_USERS")
     public String showUpdate(@RequestParam Long id, Model model) {
-        Optional<Person> optionalPerson = personsService.findById(id);
-        optionalPerson.ifPresentOrElse(
-                person -> model.addAttribute("person", person),
-                () -> new IllegalArgumentException("Invalid user Id:" + id));
-        return "person/update";
+        Person person = personsService.findById(id).orElse(null);
+        if(person == null) {
+            return "redirect:/persons";
+        }
+
+        model.addAttribute("authorities", personsService.findAllAuthorities());
+        model.addAttribute("person", person);
+        return "person/add";
     }
 
-    @PostMapping("/update")
-    public String updateUser(@RequestParam Long id, Person person,
-                             BindingResult result) {
+    @PostMapping("/save")
+    @Secured("ROLE_MANAGE_USERS")
+    public String save(@Valid Person person, Model model, BindingResult result) {
         if (result.hasErrors()) {
-            person.setId(id);
-            return "person/update";
+            model.addAttribute("authorities", personsService.findAllAuthorities());
+            model.addAttribute("person", person);
+            return "person/add";
         }
+
         personsService.savePerson(person);
         return "redirect:/persons";
     }
 
     @GetMapping("/settings")
+    @Secured("ROLE_MANAGE_USERS")
     String showUserSettings(Principal principal, Model model) {
         String login = principal.getName();
-        Optional<Person> optionalPerson = personsService.findPersonByLogin(login);
-        optionalPerson.ifPresentOrElse(
-                person -> model.addAttribute("person", person),
-                () -> new IllegalArgumentException("Invalid login")
-        );
+        Person person = personsService.findPersonByLogin(login).orElseThrow();
+        model.addAttribute("person", person);
         return "user-settings";
     }
 
     @PostMapping("/change-settings")
+    @Secured("ROLE_MANAGE_USERS")
     public String changeUserSettings(Person person, BindingResult result) {
         if (result.hasErrors()) {
             return "user-settings";
