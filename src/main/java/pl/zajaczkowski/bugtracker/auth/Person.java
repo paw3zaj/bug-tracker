@@ -40,15 +40,14 @@ public class Person {
     private Boolean enabled = true;
 
     @NotEmpty
+    @Size(min = 4)
     @Column(nullable = false)
     private String userRealName;
 
-    @NotEmpty
     @Email
     private String email;
 
-    @NotEmpty
-    @Size(min = 9, max = 9)
+//    @Size(min = 9, max = 9)
     private String phoneNumber;
 
     @ManyToMany(cascade = CascadeType.MERGE)
