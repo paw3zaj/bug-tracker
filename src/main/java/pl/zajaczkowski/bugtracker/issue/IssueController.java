@@ -12,12 +12,20 @@ import pl.zajaczkowski.bugtracker.auth.AuthorityName;
 import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.project.Project;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
 @RequestMapping("/issues")
 public class IssueController {
+
+    private Iterable<Priority> priorities;
+    private Iterable<Status> statuses;
+    private Iterable<Type> types;
+    private Iterable<Person> managers;
+    private Iterable<Person> assignees;
+    private Iterable<Project> projects;
 
     private final IssueService issueService;
 
@@ -36,13 +44,6 @@ public class IssueController {
     @GetMapping("/add")
     @Secured("ROLE_MANAGE_PROJECT")
     String showAdd(Model model) {
-        Iterable<Priority> priorities = issueService.findAllPriorities();
-        Iterable<Status> statuses = issueService.findAllStatuses();
-        Iterable<Type> types = issueService.findAllTypes();
-        Iterable<Person> managers = issueService.
-                findAllManagers(AuthorityName.ROLE_MANAGE_PROJECT);
-        Iterable<Person> assignees = issueService.findAllPersons();
-        Iterable<Project> projects = issueService.findAllProject();
         model.addAttribute("managers", managers);
         model.addAttribute("assignees", assignees);
         model.addAttribute("projects", projects);
@@ -60,14 +61,6 @@ public class IssueController {
         if(issue == null) {
             return "redirect:/issues";
         }
-
-        Iterable<Priority> priorities = issueService.findAllPriorities();
-        Iterable<Status> statuses = issueService.findAllStatuses();
-        Iterable<Type> types = issueService.findAllTypes();
-        Iterable<Person> managers = issueService.
-                findAllManagers(AuthorityName.ROLE_MANAGE_PROJECT);
-        Iterable<Person> assignees = issueService.findAllPersons();
-        Iterable<Project> projects = issueService.findAllProject();
         model.addAttribute("managers", managers);
         model.addAttribute("assignees", assignees);
         model.addAttribute("projects", projects);
@@ -89,5 +82,15 @@ public class IssueController {
 
         issueService.saveIssue(issue);
         return "redirect:/issues";
+    }
+
+    @PostConstruct
+    private void prepareData() {
+        this.priorities = issueService.findAllPriorities();
+        this.statuses = issueService.findAllStatuses();
+        this.types = issueService.findAllTypes();
+        this.managers = issueService.findAllManagers(AuthorityName.ROLE_MANAGE_PROJECT);
+        this.assignees = issueService.findAllPersons();
+        this.projects = issueService.findAllProject();
     }
 }
