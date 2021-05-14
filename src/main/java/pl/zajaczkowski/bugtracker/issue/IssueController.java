@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.zajaczkowski.bugtracker.auth.AuthorityName;
 import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.project.Project;
@@ -25,6 +26,7 @@ public class IssueController {
     }
 
     @GetMapping
+    @Secured("ROLE_MANAGE_PROJECT")
     String showIssueList(Model model) {
         Iterable<Issue> issues = issueService.findAllIssues();
         model.addAttribute("issues", issues);
@@ -51,9 +53,34 @@ public class IssueController {
         return "issue/add";
     }
 
-    @PostMapping("/addIssue")
+    @GetMapping("/edit")
     @Secured("ROLE_MANAGE_PROJECT")
-    public String addIssue(@Valid Issue issue, BindingResult result, Principal principal) {
+    public String showUpdate(@RequestParam Long id, Model model) {
+        Issue issue = issueService.findIssueById(id).orElse(null);
+        if(issue == null) {
+            return "redirect:/issues";
+        }
+
+        Iterable<Priority> priorities = issueService.findAllPriorities();
+        Iterable<Status> statuses = issueService.findAllStatuses();
+        Iterable<Type> types = issueService.findAllTypes();
+        Iterable<Person> managers = issueService.
+                findAllManagers(AuthorityName.ROLE_MANAGE_PROJECT);
+        Iterable<Person> assignees = issueService.findAllPersons();
+        Iterable<Project> projects = issueService.findAllProject();
+        model.addAttribute("managers", managers);
+        model.addAttribute("assignees", assignees);
+        model.addAttribute("projects", projects);
+        model.addAttribute("priorities", priorities);
+        model.addAttribute("statuses", statuses);
+        model.addAttribute("types", types);
+        model.addAttribute("issue", issue);
+        return "issue/add";
+    }
+
+    @PostMapping("/save")
+    @Secured("ROLE_MANAGE_PROJECT")
+    public String save(@Valid Issue issue, BindingResult result, Principal principal) {
         if (result.hasErrors()) {
             return "redirect:/issues/add";
         }

@@ -19,4 +19,8 @@ public class IssueService {
     public Iterable<Issue> findAllIssues() {
         return issueRepository.findAll();
     }
+
+    Optional<Issue> findIssueById(Long id) {
+        return issueRepository.findById(id);
+    }
 }
