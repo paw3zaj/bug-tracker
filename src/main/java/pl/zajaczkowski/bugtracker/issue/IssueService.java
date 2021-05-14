@@ -15,4 +15,8 @@ public class IssueService {
     Iterable<Issue> findAll() {
         return issueRepository.findAll();
     }
+
+    public Iterable<Issue> findAllIssues() {
+        return issueRepository.findAll();
+    }
 }

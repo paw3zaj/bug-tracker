@@ -1,23 +1,59 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="#{nav.issues}"></title>
-</head>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/auth_layout}">
+
 <body>
 
-<section class="container">
+<div layout:fragment="main-content">
 
-  <h3 th:text="#{nav.issues}" class="pb-3"></h3>
+    <a href="about" th:href="@{/issues/add}" class="btn btn-lg btn-secondary fw-bold
+         border-white bg-white un-line justify-content-center float-md-end"
+       data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+             class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            <path fill-rule="evenodd"
+                  d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+        </svg>
+    </a>
 
-  <div th:each="issue : ${issues}">
-    <span th:text="${issue.id}"></span>
-    <span th:text="${issue.project.name}"></span>
-    <span th:text="${issue.name}"></span>
-    <span th:if="${issue.assignee != null}" th:text="${issue.assignee.userRealName}"></span>
-
-  </div>
-</section>
-
+    <table class="table table-dark table-hover table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th th:text="#{issue.name}">name</th>
+            <th th:text="#{issue.description}">description</th>
+            <th th:text="#{issue.code}">code</th>
+            <th th:text="#{issue.project}">project</th>
+            <th th:text="#{issue.creator}">creator</th>
+            <th th:text="#{issue.assignee}">assignee</th>
+            <th th:text="#{issue.dateCreated}">date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="issue : ${issues}">
+            <td th:text="${issueStat.count}">count</td>
+            <td th:text="${{issue.name}}">name</td>
+            <td th:text="${{issue.description}}">desc</td>
+            <td th:text="${{issue.code}}">code</td>
+            <td th:if="${issue.project != null}"
+                th:text="${{issue.project.name}}">project</td>
+            <td th:if="${issue.creator != null}"
+                th:text="${{issue.creator.userRealName}}">creator</td>
+            <td th:if="${issue.assignee != null}"
+                th:text="${{issue.assignee.userRealName}}">assignee</td>
+            <td th:text="${{issue.dateCreated}}">date</td>
+            <td>
+                <a href="about" th:href="@{/issues/remove(id=${issue.id})}" class="btn-lg btn-secondary fw-bold
+                 border-white bg-white un-line no-line" th:text="#{issue.close}">remove issue</a>
+                <a href="about" th:href="@{/issues/edit(id=${issue.id})}" class="btn-lg btn-secondary fw-bold
+                 border-white bg-white un-line no-line" th:text="#{issue.edit}">edit issue</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
