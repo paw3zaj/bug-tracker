@@ -16,8 +16,8 @@ public class IssueService {
         return issueRepository.findAll();
     }
 
-    public Iterable<Issue> findAllIssues() {
-        return issueRepository.findAll();
+    public Iterable<Issue> findAllIssues(IssueFilter issueFilter) {
+        return issueRepository.findAll(issueFilter.buildQuery());
     }
 
     Optional<Issue> findIssueById(Long id) {

@@ -1,9 +1,7 @@
 package pl.zajaczkowski.bugtracker.issue;
 
 import lombok.Getter;
-import pl.zajaczkowski.bugtracker.issue.enumes.Priority;
-import pl.zajaczkowski.bugtracker.issue.enumes.Status;
-import pl.zajaczkowski.bugtracker.issue.enumes.Type;
+import lombok.Setter;
 import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.project.Project;
 
@@ -11,19 +9,14 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
+@Setter
 @Getter
+@Entity
 public class Issue {
 
     @Id
     @GeneratedValue
     private Long id;
-    @Column(nullable = false)
-    private Status status;
-    @Column(nullable = false)
-    private Priority priority;
-    @Column(nullable = false)
-    private Type type;
     @Column(nullable = false, unique = true, length = 100)
     private String name;
     private String description;
@@ -44,4 +37,17 @@ public class Issue {
     @OneToMany(mappedBy = "issue")
     private List<Comment> comments;
     private Double estimatedTime;
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
+    @ManyToOne
+    @JoinColumn(name = "priority_id")
+    private Priority priority;
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    private Type type;
+
+    public void setCreator(Person creator) {
+        this.creator = creator;
+    }
 }

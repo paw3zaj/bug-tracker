@@ -4,10 +4,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.zajaczkowski.bugtracker.auth.AuthorityName;
 import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.project.Project;
@@ -35,9 +32,13 @@ public class IssueController {
 
     @GetMapping
     @Secured("ROLE_MANAGE_PROJECT")
-    String showIssueList(Model model) {
-        Iterable<Issue> issues = issueService.findAllIssues();
-        model.addAttribute("issues", issues);
+    String showIssueList(@ModelAttribute IssueFilter issueFilter, Model model) {
+        model.addAttribute("issues", issueService.findAllIssues(issueFilter));
+        model.addAttribute("projects", projects);
+        model.addAttribute("priorities", priorities);
+        model.addAttribute("statuses", statuses);
+        model.addAttribute("types", types);
+        model.addAttribute("filter", issueFilter);
         return "issue/issues";
     }
 
