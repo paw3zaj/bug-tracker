@@ -24,6 +24,7 @@ public class Person {
     private Long id;
 
     @NotEmpty
+    @Size(min = 5)
     @Column(nullable = false, unique = true, length = 10)
     private String login;
 
@@ -40,14 +41,13 @@ public class Person {
     private Boolean enabled = true;
 
     @NotEmpty
-    @Size(min = 4)
+    @Size(min = 5)
     @Column(nullable = false)
     private String userRealName;
 
     @Email
     private String email;
 
-//    @Size(min = 9, max = 9)
     private String phoneNumber;
 
     @ManyToMany(cascade = CascadeType.MERGE)

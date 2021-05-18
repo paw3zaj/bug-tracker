@@ -57,7 +57,7 @@ public class PersonController {
 
     @PostMapping("/save")
     @Secured("ROLE_MANAGE_USERS")
-    public String save(@ModelAttribute @Valid Person person, Model model, BindingResult result) {
+    public String save(@Valid Person person, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("authorities", personsService.findAllAuthorities());
             model.addAttribute("person", person);
