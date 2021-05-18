@@ -8,47 +8,59 @@
 
 <div layout:fragment="main-content">
 
-    <form class="needs-validation login-form" novalidate
-          th:action="@{/persons/addUser}" th:object="${person}" method="post">
+    <form class="login-form"
+            th:action="@{/persons/save}" th:object="${person}" method="post">
         <h1 th:text="#{person.add.label}"/>
         <br>
+
+        <input type="hidden" th:field="*{id}"/>
         <div class="form-group">
             <label for="input-real_name" class="form-label" th:text="#{person.add.user_real_name}">real name</label>
             <input th:class="'form-control ' + ${#fields.hasErrors('userRealName') ? 'is-invalid' : ''}"
             id="input-real_name" th:field="*{userRealName}"/>
                             <small th:if="${#fields.hasErrors('userRealName')}" th:errors="*{userRealName}"
-                                   class="text-danger"> błąd</small>
+                                   class="text-danger">error</small>
         </div>
         <div class="form-group">
             <label for="input-login" class="form-label" th:text="#{person.add.login}">login</label>
-            <input th:class="'form-control ' + ${#fields.hasErrors('userRealName') ? 'is-invalid' : ''}"
+            <input th:class="'form-control ' + ${#fields.hasErrors('login') ? 'is-invalid' : ''}"
                    id="input-login" th:field="*{login}"/>
             <small th:if="${#fields.hasErrors('login')}" th:errors="*{login}"
                    class="text-danger"></small>
-<!--            <div class="invalid-feedback">Podaj login.</div>-->
         </div>
         <div class="form-group">
-            <label th:text="#{person.add.password}">pass</label>
-            <input type="password" th:field="*{password}" class="form-control"/>
+            <label for="input-password" class="form-label" th:text="#{person.add.password}">pass</label>
+            <input type="password"
+                   id="input-password"
+                   th:field="*{password}"
+                   th:class="'form-control ' + ${#fields.hasErrors('password') ? 'is-invalid' : ''}"/>
+            <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                   class="text-danger"></small>
         </div>
         <div class="form-group">
-                <label th:text="#{person.add.re-password}">re-pass</label>
-                <input type="password"
-                       th:field="*{repeatedPassword}"
-                       placeholder="Hasło"
-                       th:class="'form-control ' + ${#fields.hasErrors('repeatedPassword') ? 'is-invalid' : ''}"/>
-                <small class="text-danger"
-                       th:if="${#fields.hasErrors('repeatedPassword')}"
-                       th:errors="*{repeatedPassword}"></small>
+            <label for="input-re-password" class="form-label" th:text="#{person.add.re-password}">re-pass</label>
+            <input type="password"
+                   id="input-re-password"
+                   th:field="*{repeatedPassword}"
+                   th:class="'form-control ' + ${#fields.hasErrors('repeatedPassword') ? 'is-invalid' : ''}"/>
+            <small th:if="${#fields.hasErrors('repeatedPassword')}" th:errors="*{repeatedPassword}"
+                   class="text-danger"></small>
         </div>
-        th:errors="*{repeatedPassword}"></small>
+
         <div class="form-group">
-            <label th:text="#{person.add.email}"> email </label>
-            <input type="email" th:field="*{email}" class="form-control"/>
+            <label for="input-email" class="form-label" th:text="#{person.add.email}"> email </label>
+            <input type="email" id="input-email" class="form-control"
+                   th:field="*{email}" th:placeholder="#{person.add.placeholder}"/>
+            <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                   class="text-danger"></small>
         </div>
         <div class="form-group">
-            <label th:text="#{person.add.phone_number}"> phone </label>
-            <input type="text" th:field="*{phoneNumber}" class="form-control"/>
+            <label for="input-phone" class="form-label" th:text="#{person.add.phone_number}"> phone </label>
+            <input type="text" id="input-phone" class="form-control"
+                   th:field="*{phoneNumber}" th:placeholder="#{person.add.placeholder}"/>
+            <small th:if="${#fields.hasErrors('phoneNumber')}"
+                   th:errors="*{phoneNumber}"
+                   class="text-danger"></small>
         </div>
         <div class="form-group row">
             <p th:each="authority : ${authorities}">
@@ -60,43 +72,17 @@
             </p>
         </div>
         <div class="mt-3">
+            <a class="btn btn-lg btn-secondary fw-bold border-white bg-white un-line"
+               th:href="@{/persons}"
+               th:text="#{btn.cancel}">Confirm
+            </a>
             <button type="submit" class="btn btn-lg btn-secondary fw-bold border-white bg-white un-line"
-                    th:text="#{btn.add}">Confirm
+                    th:text="#{btn.confirm}">Confirm
             </button>
         </div>
     </form>
 
 
 </div>
-
-<script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function () {
-        "use strict";
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        let forms = document.querySelectorAll(".needs-validation");
-
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms).forEach(function (form) {
-            form.addEventListener(
-                "submit",
-                function (event) {
-
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    } else {
-                        alert("Gratulacje – ten formularz wygląda dobrze :)")
-                    }
-
-                    form.classList.add("was-validated");
-                },
-                false
-            );
-        });
-    })();
-</script>
-
 </body>
 </html>

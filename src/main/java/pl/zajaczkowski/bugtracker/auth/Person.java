@@ -22,28 +22,34 @@ public class Person {
     @Id
     @GeneratedValue
     private Long id;
+
     @NotEmpty
-    @Size(min = 6, message = "musi mieć minimum 6 znaków")
+    @Size(min = 5)
     @Column(nullable = false, unique = true, length = 10)
     private String login;
+
     @NotEmpty
     @Size(min = 8)
     @Column(nullable = false)
     private String password;
+
     @Transient
     private String repeatedPassword;
+
     @Column(nullable = false)
     @ColumnDefault(value = "true")
     private Boolean enabled = true;
+
     @NotEmpty
+    @Size(min = 5)
     @Column(nullable = false)
     private String userRealName;
-    @NotEmpty
+
     @Email
     private String email;
-    @NotEmpty
-    @Size(min = 9, max = 9)
+
     private String phoneNumber;
+
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "person_authorities",
             joinColumns = @JoinColumn(name = "person_id"),
