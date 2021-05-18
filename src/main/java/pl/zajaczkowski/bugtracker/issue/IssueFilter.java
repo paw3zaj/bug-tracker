@@ -11,8 +11,7 @@ import pl.zajaczkowski.bugtracker.project.Project;
 @NoArgsConstructor
 public class IssueFilter {
 
-    private String name;
-    private String code;
+    private String globalSearch;
     private Project project;
     private Status status;
     private Priority priority;
@@ -34,25 +33,19 @@ public class IssueFilter {
         return (issueRoot, query, builder) -> builder.equal(issueRoot.get("project"), project);
     }
 
-    private Specification<Issue> hasName() {
-        return (issueRoot, query, builder) -> builder.like(builder.lower(issueRoot.get("name")),
-                "%" + name.toLowerCase() + "%");
-    }
+    private Specification<Issue> globalSearching() {
 
-    private Specification<Issue> hasCode() {
-        return (issueRoot, query, builder) -> builder.like(builder.lower(issueRoot.get("code")),
-                "%" + code.toLowerCase() + "%");
+        Specification<Issue> hasName = (issueRoot, query, builder) -> builder.like(builder.lower(issueRoot.get("name")), "%" + globalSearch.toLowerCase() + "%");
+        Specification<Issue> hasCode = (issueRoot, query, builder) -> builder.like(builder.lower(issueRoot.get("code")), "%" + globalSearch.toLowerCase() + "%");
+
+        return hasName.or(hasCode);
     }
 
     public Specification<Issue> buildQuery() {
         Specification<Issue> specification = Specification.where(null);
 
-        if (name != null) {
-            specification = specification.and(hasName());
-        }
-
-        if (code != null) {
-            specification = specification.and(hasCode());
+        if (globalSearch != null) {
+            specification = specification.and(globalSearching());
         }
 
         if (project != null) {

@@ -9,7 +9,6 @@
 <div layout:fragment="main-content">
 
 
-
     <a href="about" th:href="@{/issues/add}" class="btn btn-lg btn-secondary fw-bold
          border-white bg-white un-line justify-content-center float-md-end"
        data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on top">
@@ -25,26 +24,15 @@
         <form th:action="@{/issues}" th:object="${filter}"
               class="form-inline">
 
-            <row>
-                <input th:field="*{name}"
-                       class="form-control"
-                       th:placeholder="#{issue.name}"/>
-
-                <button class="btn btn-primary" type="submit">Szukaj</button>
-            </row>
-
-            <row>
-                <input th:field="*{code}"
-                       class="form-control"
-                       th:placeholder="#{issue.code}"/>
-
-                <button class="btn btn-primary" type="submit">Szukaj</button>
-            </row>
+            <input th:field="*{globalSearch}"
+                   class="form-control"
+                   onchange="this.form.submit()"
+                   th:placeholder="#{issue.filter.search}"/>
 
             <select th:field="*{project}"
                     class="form-control"
                     onchange="this.form.submit()">
-                <option th:value="${null}" th:text="#{issue.project}">
+                <option th:value="${null}" th:text="#{issue.filter.project}">
                 </option>
                 <option th:each="project : ${projects}"
                         th:value="${project.id}"
@@ -54,7 +42,7 @@
             <select th:field="*{status}"
                     class="form-control"
                     onchange="this.form.submit()">
-                <option th:value="${null}" th:text="#{issue.status}"></option>
+                <option th:value="${null}" th:text="#{issue.filter.status}"></option>
                 <option th:each="state : ${statuses}"
                         th:value="${state.id}"
                         th:text="${state.name}"></option>
@@ -63,7 +51,7 @@
             <select th:field="*{priority}"
                     class="form-control"
                     onchange="this.form.submit()">
-                <option th:value="${null}" th:text="#{issue.priority}"></option>
+                <option th:value="${null}" th:text="#{issue.filter.priority}"></option>
                 <option th:each="priority : ${priorities}"
                         th:value="${priority.id}"
                         th:text="${priority.name}"></option>
@@ -72,7 +60,7 @@
             <select th:field="*{type}"
                     class="form-control"
                     onchange="this.form.submit()">
-                <option th:value="${null}" th:text="#{issue.type}"></option>
+                <option th:value="${null}" th:text="#{issue.filter.type}"></option>
                 <option th:each="type : ${types}"
                         th:value="${type.id}"
                         th:text="${type.name}"></option>
@@ -80,50 +68,50 @@
 
         </form>
 
-    <table class="table table-dark table-hover table-striped">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th th:text="#{issue.name}">name</th>
-            <th th:text="#{issue.code}">code</th>
-            <th th:text="#{issue.project}">project</th>
-            <th th:text="#{issue.status}">status</th>
-            <th th:text="#{issue.priority}">priority</th>
-            <th th:text="#{issue.type}">type</th>
-            <th th:text="#{issue.dateCreated}">date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="issue : ${issues}">
-            <td th:text="${issueStat.count}">count</td>
-            <td th:text="${{issue.name}}">name</td>
-            <td th:text="${{issue.code}}">code</td>
-            <td>
+        <table class="table table-dark table-hover table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th th:text="#{issue.name}">name</th>
+                <th th:text="#{issue.code}">code</th>
+                <th th:text="#{issue.project}">project</th>
+                <th th:text="#{issue.status}">status</th>
+                <th th:text="#{issue.priority}">priority</th>
+                <th th:text="#{issue.type}">type</th>
+                <th th:text="#{issue.dateCreated}">date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="issue : ${issues}">
+                <td th:text="${issueStat.count}">count</td>
+                <td th:text="${{issue.name}}">name</td>
+                <td th:text="${{issue.code}}">code</td>
+                <td>
                 <span th:if="${issue.project != null}"
                       th:text="${{issue.project.name}}">project</span>
-            </td>
-            <td>
+                </td>
+                <td>
                 <span th:if="${issue.status != null}"
                       th:text="${{issue.status.name}}">status</span>
-            </td>
-            <td>
+                </td>
+                <td>
                 <span th:if="${issue.priority != null}"
                       th:text="${{issue.priority.name}}">priority</span>
-            </td>
-            <td>
+                </td>
+                <td>
                 <span th:if="${issue.type != null}"
                       th:text="${{issue.type.name}}">type</span>
-            </td>
-            <td th:text="${{issue.dateCreated}}">date</td>
-            <td>
-                <a href="about" th:href="@{/issues/remove(id=${issue.id})}" class="btn-lg btn-secondary fw-bold
+                </td>
+                <td th:text="${{issue.dateCreated}}">date</td>
+                <td>
+                    <a href="about" th:href="@{/issues/remove(id=${issue.id})}" class="btn-lg btn-secondary fw-bold
                  border-white bg-white un-line no-line" th:text="#{issue.close}">remove issue</a>
-                <a href="about" th:href="@{/issues/edit(id=${issue.id})}" class="btn-lg btn-secondary fw-bold
+                    <a href="about" th:href="@{/issues/edit(id=${issue.id})}" class="btn-lg btn-secondary fw-bold
                  border-white bg-white un-line no-line" th:text="#{issue.edit}">edit issue</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </section>
 </div>
 </body>
