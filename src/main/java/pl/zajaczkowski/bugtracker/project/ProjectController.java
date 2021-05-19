@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -27,11 +28,23 @@ public class ProjectController {
         return "project/add";
     }
 
-    @PostMapping("/addProject")
+    @GetMapping("/edit")
     @Secured("ROLE_MANAGE_PROJECT")
-    public String addProject(Project project, BindingResult result) {
+    public String showUpdate(@RequestParam Long id, Model model) {
+        var project = projectService.findProjectById(id).orElse(null);
+        if (project == null) {
+            return "redirect:/issues";
+        }
+        model.addAttribute("project", project);
+        return "project/add";
+    }
+
+    @PostMapping("/save")
+    @Secured("ROLE_MANAGE_PROJECT")
+    public String save(@Valid Project project, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "redirect:/projects/add";
+            model.addAttribute("project", project);
+            return "project/add";
         }
         projectService.saveProject(project);
         return "redirect:/projects";
