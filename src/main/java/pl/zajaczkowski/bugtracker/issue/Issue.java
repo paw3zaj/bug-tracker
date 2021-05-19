@@ -8,7 +8,6 @@ import pl.zajaczkowski.bugtracker.project.Project;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -38,19 +37,15 @@ public class Issue {
     @OneToMany(mappedBy = "issue")
     private List<Comment> comments;
     private Double estimatedTime;
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "issue_statuses",
-            joinColumns = @JoinColumn(name = "issue_id"),
-            inverseJoinColumns = @JoinColumn(name = "status_id"))
-    private Set<Status> statuses;
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
     @ManyToOne
     @JoinColumn(name = "priority_id")
     private Priority priority;
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "issue_types",
-            joinColumns = @JoinColumn(name = "issue_id"),
-            inverseJoinColumns = @JoinColumn(name = "type_id"))
-    private Set<Type> types;
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    private Type type;
 
     public void setCreator(Person creator) {
         this.creator = creator;

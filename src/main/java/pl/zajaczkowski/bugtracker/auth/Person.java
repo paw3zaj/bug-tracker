@@ -4,8 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
-import pl.zajaczkowski.bugtracker.auth.validators.UniqueLogin;
-import pl.zajaczkowski.bugtracker.auth.validators.ValidPasswords;
+import pl.zajaczkowski.bugtracker.validators.UniqueLogin;
+import pl.zajaczkowski.bugtracker.validators.ValidPasswords;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;

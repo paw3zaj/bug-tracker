@@ -55,8 +55,8 @@ public class IssueService {
         return typeRepository.findAll();
     }
 
-    Issue saveIssue(Issue issue){
-        return issueRepository.save(issue);
+    void saveIssue(Issue issue){
+        issueRepository.save(issue);
     }
 
     Iterable<Person> findAllManagers(AuthorityName name) {
@@ -80,5 +80,13 @@ public class IssueService {
 
     Optional<Person> getLoggedUser(Principal principal) {
         return personRepository.findByLogin(principal.getName());
+    }
+
+    public Iterable<Issue> findAllIssues(IssueFilter issueFilter) {
+        return issueRepository.findAll(issueFilter.buildQuery());
+    }
+
+    Optional<Issue> findIssueById(Long id) {
+        return issueRepository.findById(id);
     }
 }
