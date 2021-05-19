@@ -3,6 +3,8 @@ package pl.zajaczkowski.bugtracker.project;
 import org.springframework.stereotype.Service;
 import pl.zajaczkowski.bugtracker.project.interfaces.ProjectRepository;
 
+import java.util.Optional;
+
 @Service
 public class ProjectService {
 
@@ -12,8 +14,12 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    Project saveProject(Project project) {
-        return projectRepository.save(project);
+    void saveProject(Project project) {
+        projectRepository.save(project);
+    }
+
+    Optional<Project> findProjectById(Long id) {
+        return projectRepository.findById(id);
     }
 
 
