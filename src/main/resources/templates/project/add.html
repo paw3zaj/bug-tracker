@@ -13,6 +13,7 @@
         <h1 th:text="#{project.add.label}"/>
         <br>
 
+        <input type="hidden" th:field="*{id}"/>
         <div class="form-group">
             <label for="input-name" class="form-label" th:text="#{project.add.name}">name</label>
             <input th:class="'form-control ' + ${#fields.hasErrors('name') ? 'is-invalid' : ''}"
@@ -32,10 +33,14 @@
             <input type="text" class="form-control" th:field="*{description}" th:placeholder="#{person.add.placeholder}"/>
         </div>
         <div class="mt-3">
+            <a class="btn btn-lg btn-secondary fw-bold border-white bg-white un-line"
+               th:href="@{/projects}"
+               th:text="#{btn.close}">close</a>
             <button type="submit" class="btn btn-lg btn-secondary fw-bold border-white bg-white un-line"
                     th:text="#{btn.confirm}">Confirm
             </button>
         </div>
+
     </form>
 
 

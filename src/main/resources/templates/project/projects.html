@@ -8,7 +8,7 @@
 
 <div layout:fragment="main-content">
 
-    <a href="about" th:href="@{/persons/add}" class="btn btn-lg btn-secondary fw-bold
+    <a href="about" th:href="@{/projects/add}" class="btn btn-lg btn-secondary fw-bold
          border-white bg-white un-line justify-content-center float-md-end"
        data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on top">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -23,24 +23,24 @@
         <thead>
         <tr>
             <th>#</th>
-            <th th:text="#{person.user_real_name}">real name</th>
-            <th th:text="#{person.login}">login</th>
-            <th th:text="#{person.email}">email</th>
-            <th th:text="#{person.phone_number}">phone</th>
+            <th th:text="#{project.name}">name</th>
+            <th th:text="#{project.code}">code</th>
+            <th th:text="#{project.description}">description</th>
+            <th th:text="#{project.date-created}">date</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="person : ${persons}">
-            <td th:text="${personStat.count}">count</td>
-            <td th:text="${{person.userRealName}}">name</td>
-            <td th:text="${{person.login}}">login</td>
-            <td th:text="${{person.email}}">email</td>
-            <td th:text="${{person.phoneNumber}}">phone</td>
+        <tr th:each="project : ${projects}">
+            <td th:text="${projectStat.count}">count</td>
+            <td th:text="${{project.name}}">name</td>
+            <td th:text="${{project.code}}">code</td>
+            <td th:text="${{project.description}}">desc</td>
+            <td th:text="${{project.dateCreated}}">date</td>
             <td>
-                <a href="about" th:href="@{/persons/remove(id=${person.id})}" class="btn-lg btn-secondary fw-bold
-                 border-white bg-white un-line no-line" th:text="#{btn.remove}">remove person</a>
-                <a href="about" th:href="@{/persons/edit(id=${person.id})}" class="btn-lg btn-secondary fw-bold
-                 border-white bg-white un-line no-line" th:text="#{btn.edit}">edit person</a>
+                <a href="about" th:href="@{/projects/remove(id=${project.id})}" class="btn-lg btn-secondary fw-bold
+                 border-white bg-white un-line no-line" th:text="#{btn.remove}">remove project</a>
+                <a href="about" th:href="@{/projects/edit(id=${project.id})}" class="btn-lg btn-secondary fw-bold
+                 border-white bg-white un-line no-line" th:text="#{btn.edit}">edit project</a>
             </td>
         </tr>
         </tbody>
