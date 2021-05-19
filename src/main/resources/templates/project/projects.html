@@ -38,7 +38,7 @@
             <td th:text="${{project.dateCreated}}">date</td>
             <td>
                 <a href="about" th:href="@{/projects/remove(id=${project.id})}" class="btn-lg btn-secondary fw-bold
-                 border-white bg-white un-line no-line" th:text="#{btn.remove}">remove project</a>
+                 border-white bg-white un-line no-line" th:text="#{btn.close}">close project</a>
                 <a href="about" th:href="@{/projects/edit(id=${project.id})}" class="btn-lg btn-secondary fw-bold
                  border-white bg-white un-line no-line" th:text="#{btn.edit}">edit project</a>
             </td>

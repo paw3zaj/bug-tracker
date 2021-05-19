@@ -56,4 +56,11 @@ public class ProjectController {
         projectService.saveProject(project);
         return "redirect:/projects";
     }
+
+    @GetMapping("/remove")
+    @Secured("ROLE_MANAGE_PROJECT")
+    public String remove(@RequestParam Long id) {
+        projectService.deleteProject(id);
+        return "redirect:/projects";
+    }
 }
