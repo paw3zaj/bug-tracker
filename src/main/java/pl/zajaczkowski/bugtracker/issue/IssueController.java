@@ -74,9 +74,16 @@ public class IssueController {
 
     @PostMapping("/save")
     @Secured("ROLE_MANAGE_PROJECT")
-    public String save(@Valid Issue issue, BindingResult result, Principal principal) {
+    public String save(@Valid Issue issue, BindingResult result, Principal principal, Model model) {
         if (result.hasErrors()) {
-            return "redirect:/issues/add";
+            model.addAttribute("managers", managers);
+            model.addAttribute("assignees", assignees);
+            model.addAttribute("projects", projects);
+            model.addAttribute("priorities", priorities);
+            model.addAttribute("statuses", statuses);
+            model.addAttribute("types", types);
+            model.addAttribute("issue", issue);
+            return "issue/add";
         }
         var optionalUser = issueService.getLoggedUser(principal);
         optionalUser.ifPresent(issue::setCreator);
