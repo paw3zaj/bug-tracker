@@ -92,15 +92,15 @@
                 </td>
                 <td>
                 <span th:if="${issue.status != null}"
-                      th:text="${{issue.status.name}}">status</span>
+                    th:text="#{${'status.' + issue.status.name}}">status</span>
                 </td>
                 <td>
                 <span th:if="${issue.priority != null}"
-                      th:text="${{issue.priority.name}}">priority</span>
+                      th:text="#{${'priority.' + issue.priority.name}}">priority</span>
                 </td>
                 <td>
                 <span th:if="${issue.type != null}"
-                      th:text="${{issue.type.name}}">type</span>
+                      th:text="#{${'type.' + issue.type.name}}">type</span>
                 </td>
                 <td th:text="${{issue.dateCreated}}">date</td>
                 <td>
