@@ -63,6 +63,13 @@ public class IssueController {
         return "redirect:/issues";
     }
 
+    @GetMapping("/remove")
+    @Secured("ROLE_MANAGE_PROJECT")
+    public String delete(@RequestParam Long id) {
+        issueService.deleteIssue(id);
+        return "redirect:/issues";
+    }
+
     private void prepareModel(Model model){
         prepareModel(model, true);
     }
