@@ -21,6 +21,13 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
+    @GetMapping
+    @Secured("ROLE_MANAGE_PROJECT")
+    String showProjectsList(Model model) {
+        model.addAttribute("projects", projectService.findAllProjects());
+        return "project/projects";
+    }
+
     @GetMapping("/add")
     @Secured("ROLE_MANAGE_PROJECT")
     String showAdd(Model model) {
@@ -33,7 +40,7 @@ public class ProjectController {
     public String showUpdate(@RequestParam Long id, Model model) {
         var project = projectService.findProjectById(id).orElse(null);
         if (project == null) {
-            return "redirect:/issues";
+            return "redirect:/projects";
         }
         model.addAttribute("project", project);
         return "project/add";

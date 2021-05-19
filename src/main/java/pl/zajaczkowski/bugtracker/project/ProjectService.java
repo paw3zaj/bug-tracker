@@ -22,5 +22,8 @@ public class ProjectService {
         return projectRepository.findById(id);
     }
 
+    Iterable<Project> findAllProjects() {
+        return projectRepository.findAll();
+    }
 
 }
