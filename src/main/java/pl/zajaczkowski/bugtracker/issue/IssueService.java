@@ -59,13 +59,8 @@ public class IssueService {
         issueRepository.save(issue);
     }
 
-    Iterable<Person> findAllManagers(AuthorityName name) {
-        Optional<Authority> authority = authorityRepository.findByName(name);
-        if(authority.isEmpty()){
-            return null;
-        }
-        return personRepository
-                .findAllByEnabledIsTrueAndAuthoritiesContains(authority.get());
+    void deleteIssue(Long id) {
+        issueRepository.deleteById(id);
     }
 
     Iterable<Person> findAllPersons() {

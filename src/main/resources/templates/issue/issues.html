@@ -105,7 +105,7 @@
                 <td th:text="${{issue.dateCreated}}">date</td>
                 <td>
                     <a href="about" th:href="@{/issues/remove(id=${issue.id})}" class="btn-lg btn-secondary fw-bold
-                 border-white bg-white un-line no-line" th:text="#{btn.close}">remove issue</a>
+                 border-white bg-white un-line no-line" th:text="#{btn.remove}">remove issue</a>
                     <a href="about" th:href="@{/issues/edit(id=${issue.id})}" class="btn-lg btn-secondary fw-bold
                  border-white bg-white un-line no-line" th:text="#{btn.edit}">edit issue</a>
                 </td>
