@@ -5,24 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.zajaczkowski.bugtracker.auth.AuthorityName;
-import pl.zajaczkowski.bugtracker.auth.Person;
-import pl.zajaczkowski.bugtracker.project.Project;
 
-import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
 @RequestMapping("/issues")
 public class IssueController {
-
-    private Iterable<Priority> priorities;
-    private Iterable<Status> statuses;
-    private Iterable<Type> types;
-    private Iterable<Person> managers;
-    private Iterable<Person> assignees;
-    private Iterable<Project> projects;
 
     private final IssueService issueService;
 
@@ -33,11 +22,8 @@ public class IssueController {
     @GetMapping
     @Secured("ROLE_MANAGE_PROJECT")
     String showIssueList(@ModelAttribute IssueFilter issueFilter, Model model) {
+        prepareModel(model, false);
         model.addAttribute("issues", issueService.findAllIssues(issueFilter));
-        model.addAttribute("projects", projects);
-        model.addAttribute("priorities", priorities);
-        model.addAttribute("statuses", statuses);
-        model.addAttribute("types", types);
         model.addAttribute("filter", issueFilter);
         return "issue/issues";
     }
@@ -45,12 +31,7 @@ public class IssueController {
     @GetMapping("/add")
     @Secured("ROLE_MANAGE_PROJECT")
     String showAdd(Model model) {
-        model.addAttribute("managers", managers);
-        model.addAttribute("assignees", assignees);
-        model.addAttribute("projects", projects);
-        model.addAttribute("priorities", priorities);
-        model.addAttribute("statuses", statuses);
-        model.addAttribute("types", types);
+        prepareModel(model);
         model.addAttribute("issue", new Issue());
         return "issue/add";
     }
@@ -59,15 +40,10 @@ public class IssueController {
     @Secured("ROLE_MANAGE_PROJECT")
     public String showUpdate(@RequestParam Long id, Model model) {
         Issue issue = issueService.findIssueById(id).orElse(null);
-        if(issue == null) {
+        if (issue == null) {
             return "redirect:/issues";
         }
-        model.addAttribute("managers", managers);
-        model.addAttribute("assignees", assignees);
-        model.addAttribute("projects", projects);
-        model.addAttribute("priorities", priorities);
-        model.addAttribute("statuses", statuses);
-        model.addAttribute("types", types);
+        prepareModel(model);
         model.addAttribute("issue", issue);
         return "issue/add";
     }
@@ -76,12 +52,7 @@ public class IssueController {
     @Secured("ROLE_MANAGE_PROJECT")
     public String save(@Valid Issue issue, BindingResult result, Principal principal, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("managers", managers);
-            model.addAttribute("assignees", assignees);
-            model.addAttribute("projects", projects);
-            model.addAttribute("priorities", priorities);
-            model.addAttribute("statuses", statuses);
-            model.addAttribute("types", types);
+            prepareModel(model);
             model.addAttribute("issue", issue);
             return "issue/add";
         }
@@ -92,13 +63,17 @@ public class IssueController {
         return "redirect:/issues";
     }
 
-    @PostConstruct
-    private void prepareData() {
-        this.priorities = issueService.findAllPriorities();
-        this.statuses = issueService.findAllStatuses();
-        this.types = issueService.findAllTypes();
-        this.managers = issueService.findAllManagers(AuthorityName.ROLE_MANAGE_PROJECT);
-        this.assignees = issueService.findAllPersons();
-        this.projects = issueService.findAllProject();
+    private void prepareModel(Model model){
+        prepareModel(model, true);
+    }
+
+    private void prepareModel(Model model, Boolean modify) {
+        if (modify) {
+            model.addAttribute("assignees", issueService.findAllPersons());
+        }
+        model.addAttribute("projects", issueService.findAllProject());
+        model.addAttribute("priorities", issueService.findAllPriorities());
+        model.addAttribute("statuses", issueService.findAllStatuses());
+        model.addAttribute("types", issueService.findAllTypes());
     }
 }
