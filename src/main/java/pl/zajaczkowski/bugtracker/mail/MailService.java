@@ -19,18 +19,21 @@ public class MailService {
     }
 
     public void send(Mail mail) {
-        try {
-            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+        Runnable task = () -> {
+            try {
+                MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
-            mimeMessageHelper.setTo(mail.getRecipient());
-            mimeMessageHelper.setSubject(mail.getSubject());
-            mimeMessageHelper.setText(mail.getContent());
+                mimeMessageHelper.setTo(mail.getRecipient());
+                mimeMessageHelper.setSubject(mail.getSubject());
+                mimeMessageHelper.setText(mail.getContent());
 
-            javaMailSender.send(mimeMessage);
+                javaMailSender.send(mimeMessage);
 
-        } catch (Exception e) {
-            LOG.info("Send e-mail error!!! " + e);
-        }
+            } catch (Exception e) {
+                LOG.info("Send e-mail error!!! " + e);
+            }
+        };
+        new Thread(task).start();
     }
 }
