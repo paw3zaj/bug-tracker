@@ -10,7 +10,11 @@
 
   <form class="login-form" th:action="@{/issues/save}"
         th:object="${issue}" method="post">
-    <h1 th:text="#{issue.add.label}"/>
+    <h1 th:switch="${issue.id}">
+      <span th:case="null" th:text="#{issue.add.title}">add</span>
+      <span th:case="*" th:text="#{issue.edit.title}">edit</span>
+    </h1>
+
     <br>
     <input type="hidden" th:field="*{id}"/>
     <div class="form-group">
