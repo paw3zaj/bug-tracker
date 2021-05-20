@@ -71,12 +71,17 @@ public class IssueController {
     @Secured("ROLE_MANAGE_PROJECT")
     public String delete(@RequestParam Long id) {
         var optionalIssue = issueService.findIssueById(id);
-        var mail = new Mail();
-        mail.setSubject("Jakiś tam temat");
-        mail.setContent("Jakiś tam content");
-        optionalIssue.ifPresent(issue -> mail.setRecipient(issue.getCreator().getEmail()));
-        mailService.send(mail);
-        issueService.deleteIssue(id);
+
+        optionalIssue.ifPresent(issue -> {
+            var recipient = issue.getCreator().getEmail();
+
+            if(recipient != null && recipient.length() != 0) {
+                var subject = "Zamknięto zadanie: \"" + issue.getName() + "\"";
+
+                mailService.send(new Mail(recipient, subject, issueService.prepareMailContent(issue)));
+            }
+            issueService.deleteIssue(id);
+        });
         return "redirect:/issues";
     }
 
