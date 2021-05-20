@@ -73,17 +73,10 @@ public class PersonController {
     String showUserSettings(Principal principal, Model model) {
         String login = principal.getName();
         Person person = personsService.findPersonByLogin(login).orElseThrow();
-        model.addAttribute("person", person);
-        return "user-settings";
-    }
+        person.setSettings(true);
 
-    @PostMapping("/change-settings")
-    @Secured("ROLE_MANAGE_USERS")
-    public String changeUserSettings(Person person, BindingResult result) {
-        if (result.hasErrors()) {
-            return "user-settings";
-        }
-        personsService.savePerson(person);
-        return "redirect:/persons";
+        model.addAttribute("authorities", personsService.findAllAuthorities());
+        model.addAttribute("person", person);
+        return "person/add";
     }
 }
