@@ -24,7 +24,7 @@ public class Person {
     private Long id;
 
     @NotEmpty
-    @Size(min = 5)
+    @Size(min = 4)
     @Column(nullable = false, unique = true, length = 10)
     private String login;
 
@@ -55,6 +55,9 @@ public class Person {
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities;
+
+    @Transient
+    private Boolean settings = false;
 
     public Person(String login, String password, String userRealName) {
         this.login = login;
