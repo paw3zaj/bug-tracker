@@ -1,8 +1,6 @@
 package pl.zajaczkowski.bugtracker.issue;
 
 import org.springframework.stereotype.Service;
-import pl.zajaczkowski.bugtracker.auth.Authority;
-import pl.zajaczkowski.bugtracker.auth.AuthorityName;
 import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.auth.PersonService;
 import pl.zajaczkowski.bugtracker.auth.interfaces.AuthorityRepository;

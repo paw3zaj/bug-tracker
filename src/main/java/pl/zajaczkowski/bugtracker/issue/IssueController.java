@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.zajaczkowski.bugtracker.mail.Mail;
+import pl.zajaczkowski.bugtracker.mail.MailService;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -14,9 +16,11 @@ import java.security.Principal;
 public class IssueController {
 
     private final IssueService issueService;
+    private final MailService mailService;
 
-    public IssueController(IssueService issueService) {
+    public IssueController(IssueService issueService, MailService mailService) {
         this.issueService = issueService;
+        this.mailService = mailService;
     }
 
     @GetMapping
@@ -66,6 +70,12 @@ public class IssueController {
     @GetMapping("/remove")
     @Secured("ROLE_MANAGE_PROJECT")
     public String delete(@RequestParam Long id) {
+        var optionalIssue = issueService.findIssueById(id);
+        var mail = new Mail();
+        mail.setSubject("Jakiś tam temat");
+        mail.setContent("Jakiś tam content");
+        optionalIssue.ifPresent(issue -> mail.setRecipient(issue.getCreator().getEmail()));
+        mailService.send(mail);
         issueService.deleteIssue(id);
         return "redirect:/issues";
     }
