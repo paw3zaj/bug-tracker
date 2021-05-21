@@ -1,8 +1,6 @@
 package pl.zajaczkowski.bugtracker.issue;
 
 import org.springframework.stereotype.Service;
-import pl.zajaczkowski.bugtracker.auth.Authority;
-import pl.zajaczkowski.bugtracker.auth.AuthorityName;
 import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.auth.PersonService;
 import pl.zajaczkowski.bugtracker.auth.interfaces.AuthorityRepository;
@@ -15,6 +13,8 @@ import pl.zajaczkowski.bugtracker.project.Project;
 import pl.zajaczkowski.bugtracker.project.interfaces.ProjectRepository;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @Service
@@ -83,5 +83,12 @@ public class IssueService {
 
     Optional<Issue> findIssueById(Long id) {
         return issueRepository.findById(id);
+    }
+
+    String prepareMailContent(Issue issue) {
+        var dateCreated = issue.getDateCreated();
+        var end = LocalDate.now();
+        var duration = dateCreated.until(end, ChronoUnit.DAYS);
+        return  "Zadanie wykonano w " + duration + " dni.";
     }
 }
