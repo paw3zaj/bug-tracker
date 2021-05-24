@@ -33,7 +33,7 @@ public class PersonService {
     }
 
     public void prepareAdminUser() {
-        Optional<Person> optionalPerson = personRepository.findByLogin(defaultAdminName);
+        Optional<Person> optionalPerson = findPersonByLogin(defaultAdminName);
         optionalPerson.ifPresentOrElse(person ->
                         LOG.info("An administrator with the login name '{}' already exist.", person.getLogin()),
                 this::createDefaultAdminUser
@@ -43,7 +43,7 @@ public class PersonService {
     private void createDefaultAdminUser() {
         LOG.info("Create an administrator: {}", defaultAdminName);
         Person admin = new Person(defaultAdminName, defaultAdminPassword, "Administrator");
-        List<Authority> authorities = (List<Authority>) authorityRepository.findAll();
+        List<Authority> authorities = (List<Authority>) findAllAuthorities();
         admin.setAuthorities(new HashSet<>(authorities));
         savePerson(admin);
     }
