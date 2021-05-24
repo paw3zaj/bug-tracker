@@ -55,7 +55,7 @@ public class PersonService {
         personRepository.save(person);
     }
 
-    Iterable<Person> findAllPersons() {
+    public Iterable<Person> findAllPersons() {
         return personRepository.findAllByEnabledIsTrueAndLoginNotLike(defaultAdminName);
     }
 
