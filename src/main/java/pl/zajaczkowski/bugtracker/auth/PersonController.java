@@ -20,7 +20,7 @@ public class PersonController {
     }
 
     @GetMapping
-    @Secured("ROLE_MANAGE_USERS")
+    @Secured({"ROLE_MANAGE_USERS", "ROLE_USERS_TAB"})
     String showPersonList(Model model) {
         Iterable<Person> personList = personsService.findAllPersons();
         model.addAttribute("persons", personList);
@@ -69,7 +69,6 @@ public class PersonController {
     }
 
     @GetMapping("/settings")
-    @Secured("ROLE_MANAGE_USERS")
     String showUserSettings(Principal principal, Model model) {
         String login = principal.getName();
         Person person = personsService.findPersonByLogin(login).orElseThrow();

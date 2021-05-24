@@ -25,7 +25,6 @@ public class ProjectController {
     }
 
     @GetMapping
-    @Secured("ROLE_MANAGE_PROJECT")
     String showProjectsList(Model model) {
         model.addAttribute("projects", projectService.findAllProjects());
         return "project/projects";
