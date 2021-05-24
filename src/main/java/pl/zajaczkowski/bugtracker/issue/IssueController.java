@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.zajaczkowski.bugtracker.auth.PersonService;
 import pl.zajaczkowski.bugtracker.mail.Mail;
 import pl.zajaczkowski.bugtracker.mail.MailService;
+import pl.zajaczkowski.bugtracker.project.ProjectService;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -16,10 +18,14 @@ import java.security.Principal;
 public class IssueController {
 
     private final IssueService issueService;
+    private final ProjectService projectService;
+    private final PersonService personService;
     private final MailService mailService;
 
-    public IssueController(IssueService issueService, MailService mailService) {
+    public IssueController(IssueService issueService, ProjectService projectService, PersonService personService, MailService mailService) {
         this.issueService = issueService;
+        this.projectService = projectService;
+        this.personService = personService;
         this.mailService = mailService;
     }
 
@@ -60,7 +66,7 @@ public class IssueController {
             model.addAttribute("issue", issue);
             return "issue/add";
         }
-        var optionalUser = issueService.getLoggedUser(principal);
+        var optionalUser = personService.findPersonByLogin(principal.getName());
         optionalUser.ifPresent(issue::setCreator);
 
         issueService.saveIssue(issue);
@@ -91,9 +97,9 @@ public class IssueController {
 
     private void prepareModel(Model model, Boolean modify) {
         if (modify) {
-            model.addAttribute("assignees", issueService.findAllPersons());
+            model.addAttribute("assignees", personService.findAllPersons());
         }
-        model.addAttribute("projects", issueService.findAllProject());
+        model.addAttribute("projects", projectService.findAllProjects());
         model.addAttribute("priorities", issueService.findAllPriorities());
         model.addAttribute("statuses", issueService.findAllStatuses());
         model.addAttribute("types", issueService.findAllTypes());
