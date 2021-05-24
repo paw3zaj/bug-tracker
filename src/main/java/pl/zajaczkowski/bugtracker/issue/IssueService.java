@@ -3,8 +3,6 @@ package pl.zajaczkowski.bugtracker.issue;
 import org.springframework.stereotype.Service;
 import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.auth.PersonService;
-import pl.zajaczkowski.bugtracker.auth.interfaces.AuthorityRepository;
-import pl.zajaczkowski.bugtracker.auth.interfaces.PersonRepository;
 import pl.zajaczkowski.bugtracker.issue.interfaces.IssueRepository;
 import pl.zajaczkowski.bugtracker.issue.interfaces.PriorityRepository;
 import pl.zajaczkowski.bugtracker.issue.interfaces.StatusRepository;
@@ -24,22 +22,17 @@ public class IssueService {
     private final PriorityRepository priorityRepository;
     private final StatusRepository statusRepository;
     private final TypeRepository typeRepository;
-    private final PersonRepository personRepository;
     private final ProjectRepository projectRepository;
-    private final AuthorityRepository authorityRepository;
     private final PersonService personService;
 
     public IssueService(IssueRepository issueRepository, PriorityRepository priorityRepository,
                         StatusRepository statusRepository, TypeRepository typeRepository,
-                        PersonRepository personRepository, ProjectRepository projectRepository,
-                        AuthorityRepository authorityRepository, PersonService personService) {
+                        ProjectRepository projectRepository, PersonService personService) {
         this.issueRepository = issueRepository;
         this.priorityRepository = priorityRepository;
         this.statusRepository = statusRepository;
         this.typeRepository = typeRepository;
-        this.personRepository = personRepository;
         this.projectRepository = projectRepository;
-        this.authorityRepository = authorityRepository;
         this.personService = personService;
     }
 
@@ -64,9 +57,7 @@ public class IssueService {
     }
 
     Iterable<Person> findAllPersons() {
-        return personRepository
-                .findAllByEnabledIsTrueAndLoginNotLike(
-                        personService.getDefaultAdminName());
+        return personService.findAllPersons();
     }
 
     Iterable<Project> findAllProject() {
@@ -74,7 +65,7 @@ public class IssueService {
     }
 
     Optional<Person> getLoggedUser(Principal principal) {
-        return personRepository.findByLogin(principal.getName());
+        return personService.findPersonByLogin(principal.getName());
     }
 
     public Iterable<Issue> findAllIssues(IssueFilter issueFilter) {
