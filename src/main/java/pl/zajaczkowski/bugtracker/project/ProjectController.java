@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.zajaczkowski.bugtracker.issue.IssueService;
 
 import javax.validation.Valid;
 
@@ -16,9 +17,11 @@ import javax.validation.Valid;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final IssueService issueService;
 
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, IssueService issueService) {
         this.projectService = projectService;
+        this.issueService = issueService;
     }
 
     @GetMapping
@@ -60,7 +63,14 @@ public class ProjectController {
     @GetMapping("/remove")
     @Secured("ROLE_MANAGE_PROJECT")
     public String remove(@RequestParam Long id) {
-        projectService.deleteProject(id);
+
+        var optionalProject = projectService.findProjectById(id);
+        optionalProject.ifPresent(project -> {
+            var issues = issueService.findAllIssuesByProject(project);
+            issueService.deleteIssuesList(issues);
+            projectService.deleteProject(id);
+        });
+
         return "redirect:/projects";
     }
 }
