@@ -30,7 +30,6 @@ public class IssueController {
     }
 
     @GetMapping
-    @Secured("ROLE_MANAGE_PROJECT")
     String showIssueList(@ModelAttribute IssueFilter issueFilter, Model model) {
         prepareModel(model, false);
         model.addAttribute("issues", issueService.findAllIssues(issueFilter));
