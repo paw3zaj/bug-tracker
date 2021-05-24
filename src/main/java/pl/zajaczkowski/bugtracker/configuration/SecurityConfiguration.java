@@ -42,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/about", "/signup").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login")
-                .defaultSuccessUrl("/dashboard", true).permitAll()
+                .defaultSuccessUrl("/projects", true).permitAll()
                 .and().logout().permitAll();
     }
 }
