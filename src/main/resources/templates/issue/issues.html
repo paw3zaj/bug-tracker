@@ -53,9 +53,9 @@
                     class="form-control"
                     onchange="this.form.submit()">
                 <option th:value="${null}" th:text="#{issue.filter.status}"></option>
-                <option th:each="state : ${statuses}"
-                        th:value="${state.id}"
-                        th:text="#{${'state.' + state.name}}"></option>
+                <option th:each="status : ${statuses}"
+                        th:value="${status.id}"
+                        th:text="#{${'status.' + status.name}}"></option>
             </select>
 
             <select th:field="*{priority}"
@@ -85,6 +85,7 @@
                 <th th:text="#{issue.name}">name</th>
                 <th th:text="#{issue.code}">code</th>
                 <th th:text="#{issue.project}">project</th>
+                <th th:text="#{issue.assignee}">assignee</th>
                 <th th:text="#{issue.status}">status</th>
                 <th th:text="#{issue.priority}">priority</th>
                 <th th:text="#{issue.type}">type</th>
@@ -99,6 +100,10 @@
                 <td>
                 <span th:if="${issue.project != null}"
                       th:text="${{issue.project.name}}">project</span>
+                </td>
+                <td>
+                <span th:if="${issue.assignee != null}"
+                      th:text="${{issue.assignee.userRealName}}">project</span>
                 </td>
                 <td>
                 <span th:if="${issue.status != null}"

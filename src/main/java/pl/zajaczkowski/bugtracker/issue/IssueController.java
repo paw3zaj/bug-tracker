@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.auth.PersonService;
 import pl.zajaczkowski.bugtracker.mail.MailService;
+import pl.zajaczkowski.bugtracker.project.Project;
 import pl.zajaczkowski.bugtracker.project.ProjectService;
 
 import javax.validation.Valid;
@@ -28,9 +30,33 @@ public class IssueController {
         this.mailService = mailService;
     }
 
+    @ModelAttribute("assignees")
+    public Iterable<Person> getAssignees() {
+        return personService.findAllPersons();
+    }
+
+    @ModelAttribute("projects")
+    public Iterable<Project> getProjects() {
+        return projectService.findAllProjects();
+    }
+
+    @ModelAttribute("priorities")
+    public Iterable<Priority> getPriorities() {
+        return issueService.findAllPriorities();
+    }
+
+    @ModelAttribute("statuses")
+    public Iterable<Status> getStatuses() {
+        return issueService.findAllStatuses();
+    }
+
+    @ModelAttribute("types")
+    public Iterable<Type> getTypes(){
+        return issueService.findAllTypes();
+    }
+
     @GetMapping
     String showIssueList(@ModelAttribute IssueFilter issueFilter, Model model) {
-        prepareModel(model, false);
         model.addAttribute("issues", issueService.findAllIssues(issueFilter));
         model.addAttribute("filter", issueFilter);
         return "issue/issues";
@@ -39,7 +65,6 @@ public class IssueController {
     @GetMapping("/add")
     @Secured("ROLE_MANAGE_PROJECT")
     String showAdd(Model model) {
-        prepareModel(model);
         model.addAttribute("issue", new Issue());
         return "issue/add";
     }
@@ -51,7 +76,6 @@ public class IssueController {
         if (issue == null) {
             return "redirect:/issues";
         }
-        prepareModel(model);
         model.addAttribute("issue", issue);
         return "issue/add";
     }
@@ -60,7 +84,6 @@ public class IssueController {
     @Secured("ROLE_MANAGE_PROJECT")
     public String save(@Valid Issue issue, BindingResult result, Principal principal, Model model) {
         if (result.hasErrors()) {
-            prepareModel(model);
             model.addAttribute("issue", issue);
             return "issue/add";
         }
@@ -87,19 +110,5 @@ public class IssueController {
 
         });
         return "redirect:/issues";
-    }
-
-    private void prepareModel(Model model){
-        prepareModel(model, true);
-    }
-
-    private void prepareModel(Model model, Boolean modify) {
-//        if (modify) {
-            model.addAttribute("assignees", personService.findAllPersons());
-//        }
-        model.addAttribute("projects", projectService.findAllProjects());
-        model.addAttribute("priorities", issueService.findAllPriorities());
-        model.addAttribute("statuses", issueService.findAllStatuses());
-        model.addAttribute("types", issueService.findAllTypes());
     }
 }
