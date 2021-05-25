@@ -13,8 +13,7 @@ public class Mail {
     private String subject;
     private String content;
 
-    public Mail(String recipient, String subject, String content) {
-        this.recipient = recipient;
+    public Mail(String subject, String content) {
         this.subject = subject;
         this.content = content;
     }

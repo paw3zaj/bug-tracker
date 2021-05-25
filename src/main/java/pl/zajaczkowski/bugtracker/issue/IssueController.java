@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.zajaczkowski.bugtracker.auth.PersonService;
-import pl.zajaczkowski.bugtracker.mail.Mail;
 import pl.zajaczkowski.bugtracker.mail.MailService;
 import pl.zajaczkowski.bugtracker.project.ProjectService;
 
@@ -76,16 +75,16 @@ public class IssueController {
     @Secured("ROLE_MANAGE_PROJECT")
     public String delete(@RequestParam Long id) {
         var optionalIssue = issueService.findIssueById(id);
-
         optionalIssue.ifPresent(issue -> {
+
             var recipient = issue.getCreator().getEmail();
-
             if(recipient != null && recipient.length() != 0) {
-                var subject = "Zamknięto zadanie: \"" + issue.getName() + "\"";
-
-                mailService.send(new Mail(recipient, subject, issueService.prepareMailContent(issue)));
+                var mail = issueService.prepareMail(issue);
+                mail.setRecipient(recipient);
+                mailService.send(mail);
             }
             issueService.deleteIssue(id);
+
         });
         return "redirect:/issues";
     }

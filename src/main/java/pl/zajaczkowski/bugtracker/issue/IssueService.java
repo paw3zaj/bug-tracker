@@ -5,11 +5,15 @@ import pl.zajaczkowski.bugtracker.issue.interfaces.IssueRepository;
 import pl.zajaczkowski.bugtracker.issue.interfaces.PriorityRepository;
 import pl.zajaczkowski.bugtracker.issue.interfaces.StatusRepository;
 import pl.zajaczkowski.bugtracker.issue.interfaces.TypeRepository;
+import pl.zajaczkowski.bugtracker.mail.Mail;
 import pl.zajaczkowski.bugtracker.project.Project;
 
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 @Service
 public class IssueService {
@@ -63,10 +67,21 @@ public class IssueService {
         return issueRepository.findById(id);
     }
 
-    String prepareMailContent(Issue issue) {
+    Mail prepareMail(Issue issue) {
+
         var dateCreated = issue.getDateCreated();
         var end = LocalDate.now();
         var duration = dateCreated.until(end, ChronoUnit.DAYS);
-        return  "Zadanie wykonano w " + duration + " dni.";
+
+        var locale = Locale.getDefault();
+        var bundle = ResourceBundle.getBundle("mail", locale);
+
+        var subject = bundle.getString("subject");
+        var content = bundle.getString("content");
+
+        var subjectFormat = MessageFormat.format(subject, issue.getName());
+        var contentFormat = MessageFormat.format(content, duration);
+
+        return new Mail(subjectFormat, contentFormat);
     }
 }
