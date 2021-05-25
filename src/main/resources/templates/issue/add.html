@@ -31,10 +31,10 @@
     <div class="form-group">
       <select th:class="'form-control ' + ${#fields.hasErrors('assignee') ? 'is-invalid' : ''}"
               th:field="*{assignee}" class="form-select" aria-label="Default select example">
-        <option th:value="${null}" th:text="#{issue.add.assigne}"></option>
+        <option th:value="${null}" th:text="#{issue.add.assignee}"></option>
         <option th:each="assignee : ${assignees}"
                 th:value="${assignee.id}"
-                th:text="${assignee.userRealName}">assigne</option>
+                th:text="${assignee.userRealName}">assignee</option>
       </select>
         <small th:if="${#fields.hasErrors('assignee')}" th:errors="*{assignee}"
                class="text-danger"></small>
