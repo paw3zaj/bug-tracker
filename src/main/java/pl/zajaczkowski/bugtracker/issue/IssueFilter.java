@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.Specification;
+import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.project.Project;
 
 @Getter
@@ -13,6 +14,7 @@ public class IssueFilter {
 
     private String globalSearch;
     private Project project;
+    private Person assignee;
     private Status status;
     private Priority priority;
     private Type type;
@@ -33,6 +35,10 @@ public class IssueFilter {
         return (issueRoot, query, builder) -> builder.equal(issueRoot.get("project"), project);
     }
 
+    private Specification<Issue> hasAssignee() {
+        return (issueRoot, query, builder) -> builder.equal(issueRoot.get("assignee"), assignee);
+    }
+
     private Specification<Issue> globalSearching() {
 
         Specification<Issue> hasName = (issueRoot, query, builder) -> builder.like(builder.lower(issueRoot.get("name")), "%" + globalSearch.toLowerCase() + "%");
@@ -50,6 +56,10 @@ public class IssueFilter {
 
         if (project != null) {
             specification = specification.and(hasProject());
+        }
+
+        if(assignee != null) {
+            specification = specification.and(hasAssignee());
         }
 
         if (priority != null) {

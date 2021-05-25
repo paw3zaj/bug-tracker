@@ -39,13 +39,23 @@
                         th:text="${project.name}"></option>
             </select>
 
+            <select th:field="*{assignee}"
+                    class="form-control"
+                    onchange="this.form.submit()">
+                <option th:value="${null}" th:text="#{issue.filter.assignee}">
+                </option>
+                <option th:each="assignee : ${assignees}"
+                        th:value="${assignee.id}"
+                        th:text="${assignee.userRealName}"></option>
+            </select>
+
             <select th:field="*{status}"
                     class="form-control"
                     onchange="this.form.submit()">
                 <option th:value="${null}" th:text="#{issue.filter.status}"></option>
                 <option th:each="state : ${statuses}"
                         th:value="${state.id}"
-                        th:text="${state.name}"></option>
+                        th:text="#{${'state.' + state.name}}"></option>
             </select>
 
             <select th:field="*{priority}"
@@ -54,7 +64,7 @@
                 <option th:value="${null}" th:text="#{issue.filter.priority}"></option>
                 <option th:each="priority : ${priorities}"
                         th:value="${priority.id}"
-                        th:text="${priority.name}"></option>
+                        th:text="#{${'priority.' + priority.name}}"></option>
             </select>
 
             <select th:field="*{type}"
@@ -63,7 +73,7 @@
                 <option th:value="${null}" th:text="#{issue.filter.type}"></option>
                 <option th:each="type : ${types}"
                         th:value="${type.id}"
-                        th:text="${type.name}"></option>
+                        th:text="#{${'type.' + type.name}}"></option>
             </select>
 
         </form>

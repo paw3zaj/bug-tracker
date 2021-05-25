@@ -94,9 +94,9 @@ public class IssueController {
     }
 
     private void prepareModel(Model model, Boolean modify) {
-        if (modify) {
+//        if (modify) {
             model.addAttribute("assignees", personService.findAllPersons());
-        }
+//        }
         model.addAttribute("projects", projectService.findAllProjects());
         model.addAttribute("priorities", issueService.findAllPriorities());
         model.addAttribute("statuses", issueService.findAllStatuses());
