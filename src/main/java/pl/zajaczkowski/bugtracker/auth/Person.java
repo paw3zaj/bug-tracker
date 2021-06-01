@@ -1,5 +1,6 @@
 package pl.zajaczkowski.bugtracker.auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,11 +29,13 @@ public class Person {
     @Column(nullable = false, unique = true, length = 10)
     private String login;
 
+    @JsonIgnore
     @NotEmpty
     @Size(min = 8)
     @Column(nullable = false)
     private String password;
 
+    @JsonIgnore
     @Transient
     private String repeatedPassword;
 

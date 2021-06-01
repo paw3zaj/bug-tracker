@@ -55,6 +55,10 @@ public class IssueService {
         issueRepository.deleteAll(issues);
     }
 
+    public Iterable<Issue> findAllIssues() {
+        return findAllIssues(new IssueFilter());
+    }
+
     public Iterable<Issue> findAllIssues(IssueFilter issueFilter) {
         return issueRepository.findAll(issueFilter.buildQuery());
     }

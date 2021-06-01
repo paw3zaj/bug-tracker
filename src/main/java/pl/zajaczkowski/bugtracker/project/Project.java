@@ -1,5 +1,6 @@
 package pl.zajaczkowski.bugtracker.project;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -24,6 +25,7 @@ public class Project {
     private String name;
 
     @OneToMany(mappedBy = "project")
+    @JsonIgnoreProperties("project")
     private Set<Issue> issues;
 
     @ColumnDefault(value = "true")
