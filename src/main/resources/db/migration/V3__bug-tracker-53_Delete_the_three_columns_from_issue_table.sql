@@ -1,0 +1,4 @@
+Alter TABLE issue
+    DROP COLUMN IF EXISTS priority,
+    DROP COLUMN IF EXISTS status,
+    DROP COLUMN IF EXISTS type;
