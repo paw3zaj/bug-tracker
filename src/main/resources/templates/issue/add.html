@@ -28,7 +28,7 @@
             <small th:if="${#fields.hasErrors('project')}" th:errors="*{project}"
                    class="text-danger"></small>
         </div>
-      <br>
+        <br>
         <div class="form-group">
             <select th:class="'form-control ' + ${#fields.hasErrors('assignee') ? 'is-invalid' : ''}"
                     th:field="*{assignee}" class="form-select" aria-label="Default select example">
@@ -63,28 +63,28 @@
         <div class="row">
 
             <div class="col-4 form-group">
-              <h4 th:text="#{issue.add.priority}"></h4>
-                    <p th:each="priority : ${priorities}">
-                        <input type="radio" th:field="*{priority}" th:value="${priority.id}"/>
-                        <label th:for="${#ids.prev('priority')}"
-                               th:text="#{${'priority.' + priority.name}}">priority</label>
-                    </p>
+                <h4 th:text="#{issue.add.priority}"></h4>
+                <p th:each="priority : ${priorities}">
+                    <input type="radio" th:field="*{priority}" th:value="${priority.id}"/>
+                    <label th:for="${#ids.prev('priority')}"
+                           th:text="#{${'priority.' + priority.name}}">priority</label>
+                </p>
             </div>
             <div class="col-4 form-group">
-              <h4 th:text="#{issue.add.status}"></h4>
-                    <p th:each="status : ${statuses}">
-                        <input type="radio" th:field="*{status}" th:value="${status.id}"/>
-                        <label th:for="${#ids.prev('status')}"
-                               th:text="#{${'status.' + status.name}}">status</label>
-                    </p>
+                <h4 th:text="#{issue.add.status}"></h4>
+                <p th:each="status : ${statuses}">
+                    <input type="radio" th:field="*{status}" th:value="${status.id}"/>
+                    <label th:for="${#ids.prev('status')}"
+                           th:text="#{${'status.' + status.name}}">status</label>
+                </p>
             </div>
             <div class="col-4 form-group">
-              <h4 th:text="#{issue.add.type}"></h4>
-                    <p th:each="type : ${types}">
-                        <input type="radio" th:field="*{type}" th:value="${type.id}"/>
-                        <label th:for="${#ids.prev('type')}"
-                               th:text="#{${'type.' + type.name}}">type</label>
-                    </p>
+                <h4 th:text="#{issue.add.type}"></h4>
+                <p th:each="type : ${types}">
+                    <input type="radio" th:field="*{type}" th:value="${type.id}"/>
+                    <label th:for="${#ids.prev('type')}"
+                           th:text="#{${'type.' + type.name}}">type</label>
+                </p>
             </div>
 
         </div>
@@ -100,8 +100,6 @@
         </div>
     </form>
 
-
 </div>
-
 </body>
 </html>

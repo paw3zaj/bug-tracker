@@ -99,6 +99,10 @@
                 <th th:text="#{issue.priority}">priority</th>
                 <th th:text="#{issue.type}">type</th>
                 <th th:text="#{issue.dateCreated}">date</th>
+                <th>
+                    <a th:href="@{/issues}" class="btn btn-secondary fw-bold un-line"
+                       th:text="#{btn.filter.remove}">remove filter</a>
+                </th>
             </tr>
             </thead>
             <tbody>
