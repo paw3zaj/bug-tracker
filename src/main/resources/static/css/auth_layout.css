@@ -6,8 +6,15 @@ a:hover.un-line {
     text-decoration: underline;
 }
 
+a:hover.boots-ico {
+    color: grey;
+}
+
 button:hover.un-line {
     text-decoration: underline;
+}
+a.boots-ico {
+    color: #fff;
 }
 
 body {
