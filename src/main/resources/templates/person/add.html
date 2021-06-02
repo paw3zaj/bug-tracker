@@ -26,9 +26,9 @@
         <div class="form-group">
             <label for="input-real_name" class="form-label" th:text="#{person.add.user_real_name}">real name</label>
             <input th:class="'form-control ' + ${#fields.hasErrors('userRealName') ? 'is-invalid' : ''}"
-            id="input-real_name" th:field="*{userRealName}"/>
-                            <small th:if="${#fields.hasErrors('userRealName')}" th:errors="*{userRealName}"
-                                   class="text-danger">error</small>
+                   id="input-real_name" th:field="*{userRealName}"/>
+            <small th:if="${#fields.hasErrors('userRealName')}" th:errors="*{userRealName}"
+                   class="text-danger">error</small>
         </div>
         <div class="form-group">
             <label for="input-login" class="form-label" th:text="#{person.add.login}">login</label>
@@ -71,14 +71,12 @@
                    th:errors="*{phoneNumber}"
                    class="text-danger"></small>
         </div>
-        <div class="form-group row">
-            <p th:each="authority : ${authorities}">
-                <input type="checkbox" name="authorities"
-                       th:value="${authority.id}"
-                       th:field="*{authorities}"/>
-                <label th:text="#{${'authority.' + authority.name}}"
-                       th:for="${#ids.prev('authorities')}"></label>
-            </p>
+        <br>
+        <div class="form-check form-check-inline" th:each="authority : ${authorities}">
+            <input class="form-check-input" type="checkbox" th:value="${authority.id}"
+                   th:field="*{authorities}"/>
+            <label class="form-check-label" th:text="#{${'authority.' + authority.name}}"
+                   th:for="${#ids.prev('authorities')}"></label>
         </div>
         <div class="mt-3">
             <a class="btn btn-lg btn-secondary fw-bold border-white bg-white un-line"
@@ -90,7 +88,6 @@
             </button>
         </div>
     </form>
-
 
 </div>
 </body>
