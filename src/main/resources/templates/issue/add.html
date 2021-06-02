@@ -61,30 +61,29 @@
                    class="text-danger"></small>
         </div>
         <div class="row">
-
-            <div class="col-4 form-group">
+            <div class="col-4">
                 <h4 th:text="#{issue.add.priority}"></h4>
-                <p th:each="priority : ${priorities}">
-                    <input type="radio" th:field="*{priority}" th:value="${priority.id}"/>
-                    <label th:for="${#ids.prev('priority')}"
+                <div class="form-check" th:each="priority : ${priorities}">
+                    <input class="form-check-input" type="radio" th:field="*{priority}" th:value="${priority.id}"/>
+                    <label class="form-check-label" th:for="${#ids.prev('priority')}"
                            th:text="#{${'priority.' + priority.name}}">priority</label>
-                </p>
+                </div>
             </div>
-            <div class="col-4 form-group">
+            <div class="col-4">
                 <h4 th:text="#{issue.add.status}"></h4>
-                <p th:each="status : ${statuses}">
-                    <input type="radio" th:field="*{status}" th:value="${status.id}"/>
-                    <label th:for="${#ids.prev('status')}"
+                <div class="form-check" th:each="status : ${statuses}">
+                    <input class="form-check-input" type="radio" th:field="*{status}" th:value="${status.id}"/>
+                    <label class="form-check-label" th:for="${#ids.prev('status')}"
                            th:text="#{${'status.' + status.name}}">status</label>
-                </p>
+                </div>
             </div>
-            <div class="col-4 form-group">
+            <div class="col-4">
                 <h4 th:text="#{issue.add.type}"></h4>
-                <p th:each="type : ${types}">
-                    <input type="radio" th:field="*{type}" th:value="${type.id}"/>
-                    <label th:for="${#ids.prev('type')}"
+                <div class="form-check" th:each="type : ${types}">
+                    <input class="form-check-input" type="radio" th:field="*{type}" th:value="${type.id}"/>
+                    <label class="form-check-label" th:for="${#ids.prev('type')}"
                            th:text="#{${'type.' + type.name}}">type</label>
-                </p>
+                </div>
             </div>
 
         </div>
