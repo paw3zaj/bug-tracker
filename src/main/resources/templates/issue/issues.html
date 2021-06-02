@@ -6,73 +6,86 @@
 
 <body>
 
+
 <div layout:fragment="main-content">
-
-    <a href="about" th:href="@{/issues/add}" class="boots-ico justify-content-center float-md-end"
-       data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on top">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-        </svg>
-    </a>
-
-    <section class="container">
+    <div>
+        <a href="add.html" th:href="@{/issues/add}" class="boots-ico float-md-end"
+           data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on top">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-square"
+                 viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+        </a>
+    </div>
+<br>
+    <br>
+    <section>
         <form th:action="@{/issues}" th:object="${filter}"
               class="form-inline">
+            <div class="row gx-1">
+                <div class="col-2">
+                    <input th:field="*{globalSearch}"
+                           class="form-control"
+                           onchange="this.form.submit()"
+                           th:placeholder="#{issue.filter.search}"/>
+                </div>
+                <div class="col-2">
+                    <select th:field="*{project}"
+                            class="form-control"
+                            onchange="this.form.submit()">
+                        <option th:value="${null}" th:text="#{issue.filter.project}">
+                        </option>
+                        <option th:each="project : ${projects}"
+                                th:value="${project.id}"
+                                th:text="${project.name}"></option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <select th:field="*{assignee}"
+                            class="form-control"
+                            onchange="this.form.submit()">
+                        <option th:value="${null}" th:text="#{issue.filter.assignee}">
+                        </option>
+                        <option th:each="assignee : ${assignees}"
+                                th:value="${assignee.id}"
+                                th:text="${assignee.userRealName}"></option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <select th:field="*{status}"
+                            class="form-control"
+                            onchange="this.form.submit()">
+                        <option th:value="${null}" th:text="#{issue.filter.status}"></option>
+                        <option th:each="status : ${statuses}"
+                                th:value="${status.id}"
+                                th:text="#{${'status.' + status.name}}"></option>
+                    </select>
+                </div>
+                <div class="col-2">
 
-            <input th:field="*{globalSearch}"
-                   class="form-control"
-                   onchange="this.form.submit()"
-                   th:placeholder="#{issue.filter.search}"/>
-
-            <select th:field="*{project}"
-                    class="form-control"
-                    onchange="this.form.submit()">
-                <option th:value="${null}" th:text="#{issue.filter.project}">
-                </option>
-                <option th:each="project : ${projects}"
-                        th:value="${project.id}"
-                        th:text="${project.name}"></option>
-            </select>
-
-            <select th:field="*{assignee}"
-                    class="form-control"
-                    onchange="this.form.submit()">
-                <option th:value="${null}" th:text="#{issue.filter.assignee}">
-                </option>
-                <option th:each="assignee : ${assignees}"
-                        th:value="${assignee.id}"
-                        th:text="${assignee.userRealName}"></option>
-            </select>
-
-            <select th:field="*{status}"
-                    class="form-control"
-                    onchange="this.form.submit()">
-                <option th:value="${null}" th:text="#{issue.filter.status}"></option>
-                <option th:each="status : ${statuses}"
-                        th:value="${status.id}"
-                        th:text="#{${'status.' + status.name}}"></option>
-            </select>
-
-            <select th:field="*{priority}"
-                    class="form-control"
-                    onchange="this.form.submit()">
-                <option th:value="${null}" th:text="#{issue.filter.priority}"></option>
-                <option th:each="priority : ${priorities}"
-                        th:value="${priority.id}"
-                        th:text="#{${'priority.' + priority.name}}"></option>
-            </select>
-
-            <select th:field="*{type}"
-                    class="form-control"
-                    onchange="this.form.submit()">
-                <option th:value="${null}" th:text="#{issue.filter.type}"></option>
-                <option th:each="type : ${types}"
-                        th:value="${type.id}"
-                        th:text="#{${'type.' + type.name}}"></option>
-            </select>
-
+                    <select th:field="*{priority}"
+                            class="form-control"
+                            onchange="this.form.submit()">
+                        <option th:value="${null}" th:text="#{issue.filter.priority}"></option>
+                        <option th:each="priority : ${priorities}"
+                                th:value="${priority.id}"
+                                th:text="#{${'priority.' + priority.name}}"></option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <select th:field="*{type}"
+                            class="form-control"
+                            onchange="this.form.submit()">
+                        <option th:value="${null}" th:text="#{issue.filter.type}"></option>
+                        <option th:each="type : ${types}"
+                                th:value="${type.id}"
+                                th:text="#{${'type.' + type.name}}"></option>
+                    </select>
+                </div>
+            </div>
         </form>
+
 
         <table class="table table-dark table-hover table-striped">
             <thead>
@@ -103,7 +116,7 @@
                 </td>
                 <td>
                 <span th:if="${issue.status != null}"
-                    th:text="#{${'status.' + issue.status.name}}">status</span>
+                      th:text="#{${'status.' + issue.status.name}}">status</span>
                 </td>
                 <td>
                 <span th:if="${issue.priority != null}"
