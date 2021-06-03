@@ -55,6 +55,18 @@ public class PersonService {
         personRepository.save(person);
     }
 
+    void savePerson(EditPerson editPerson) {
+
+        var person = personRepository.findById(editPerson.getId()).orElse(null);
+        person.setUserRealName(editPerson.getUserRealName());
+        person.setLogin(editPerson.getLogin());
+        person.setEmail(editPerson.getEmail());
+        person.setPhoneNumber(editPerson.getPhoneNumber());
+        person.setAuthorities(editPerson.getAuthorities());
+
+        personRepository.save(person);
+    }
+
     public Iterable<Person> findAllPersons() {
         return personRepository.findAllByEnabledIsTrueAndLoginNotLike(defaultAdminName);
     }

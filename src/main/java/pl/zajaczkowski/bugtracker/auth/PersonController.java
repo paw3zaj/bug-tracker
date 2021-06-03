@@ -42,19 +42,6 @@ public class PersonController {
         return "person/add";
     }
 
-    @GetMapping("/edit")
-    @Secured("ROLE_MANAGE_USERS")
-    public String showUpdate(@RequestParam Long id, Model model) {
-        Person person = personsService.findById(id).orElse(null);
-        if(person == null) {
-            return "redirect:/persons";
-        }
-
-        model.addAttribute("authorities", personsService.findAllAuthorities());
-        model.addAttribute("person", person);
-        return "person/add";
-    }
-
     @PostMapping("/save")
     @Secured("ROLE_MANAGE_USERS")
     public String save(@Valid Person person, BindingResult result, Model model) {
@@ -65,6 +52,36 @@ public class PersonController {
         }
 
         personsService.savePerson(person);
+        return "redirect:/persons";
+    }
+
+    @GetMapping("/edit")
+    @Secured("ROLE_MANAGE_USERS")
+    public String showEdit(@RequestParam Long id, Model model) {
+        var person = personsService.findById(id).orElse(null);
+        if(person == null) {
+            return "redirect:/persons";
+        }
+
+        var editPerson = new EditPerson(person.getId(), person.getLogin(), person.getUserRealName()
+                , person.getEmail(), person.getPhoneNumber()
+        , person.getAuthorities());
+
+        model.addAttribute("authorities", personsService.findAllAuthorities());
+        model.addAttribute("person", editPerson);
+        return "person/edit";
+    }
+
+    @PostMapping("/update")
+    @Secured("ROLE_MANAGE_USERS")
+    public String update(@Valid EditPerson editPerson, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("authorities", personsService.findAllAuthorities());
+            model.addAttribute("person", editPerson);
+            return "person/edit";
+        }
+
+        personsService.savePerson(editPerson);
         return "redirect:/persons";
     }
 

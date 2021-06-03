@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/auth_layout}">
+
+<body>
+
+<div layout:fragment="main-content">
+
+
+
+  <form class="login-form"
+        th:action="@{/persons/update}" th:object="${person}" method="post">
+
+    <h1 th:switch="${person.settings}">
+                    <span th:case="false" th:text="#{person.edit.title}">edit</span>
+                    <span th:case="true" th:text="#{person.settings.title}">settings</span>
+    </h1>
+    <br>
+
+    <input type="hidden" th:field="*{id}"/>
+    <div class="form-group">
+      <label for="input-real_name" class="form-label" th:text="#{person.add.user_real_name}">real name</label>
+      <input th:class="'form-control ' + ${#fields.hasErrors('userRealName') ? 'is-invalid' : ''}"
+             id="input-real_name" th:field="*{userRealName}"/>
+      <small th:if="${#fields.hasErrors('userRealName')}" th:errors="*{userRealName}"
+             class="text-danger">error</small>
+    </div>
+    <div class="form-group">
+      <label for="input-login" class="form-label" th:text="#{person.add.login}">login</label>
+      <input th:class="'form-control ' + ${#fields.hasErrors('login') ? 'is-invalid' : ''}"
+             id="input-login" th:field="*{login}"/>
+      <small th:if="${#fields.hasErrors('login')}" th:errors="*{login}"
+             class="text-danger"></small>
+    </div>
+    <div class="form-group">
+      <label for="input-email" class="form-label" th:text="#{person.add.email}"> email </label>
+      <input type="text" id="input-email" class="form-control"
+             th:field="*{email}" th:placeholder="#{person.add.placeholder}"/>
+      <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+             class="text-danger"></small>
+    </div>
+    <div class="form-group">
+      <label for="input-phone" class="form-label" th:text="#{person.add.phone_number}"> phone </label>
+      <input type="text" id="input-phone" class="form-control"
+             th:field="*{phoneNumber}" th:placeholder="#{person.add.placeholder}"/>
+      <small th:if="${#fields.hasErrors('phoneNumber')}"
+             th:errors="*{phoneNumber}"
+             class="text-danger"></small>
+    </div>
+    <br>
+    <div class="form-check form-check-inline" th:each="authority : ${authorities}">
+      <input class="form-check-input" type="checkbox" th:value="${authority.id}"
+             th:field="*{authorities}"/>
+      <label class="form-check-label" th:text="#{${'authority.' + authority.name}}"
+             th:for="${#ids.prev('authorities')}"></label>
+    </div>
+    <div class="mt-3">
+      <a class="btn btn-lg btn-secondary fw-bold border-white bg-white un-line"
+         th:href="@{/persons}"
+         th:text="#{btn.cancel}">cancel
+      </a>
+      <button type="submit" class="btn btn-lg btn-secondary fw-bold border-white bg-white un-line"
+              th:text="#{btn.confirm}">Confirm
+      </button>
+    </div>
+  </form>
+
+</div>
+</body>
+</html>

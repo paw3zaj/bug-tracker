@@ -11,15 +11,7 @@
     <form class="login-form"
           th:action="@{/persons/save}" th:object="${person}" method="post">
 
-        <h1 th:switch="${person.id}">
-            <span th:case="null" th:text="#{person.add.title}">add</span>
-            <span th:case="*">
-                <span th:switch="${person.settings}">
-                    <span th:case="false" th:text="#{person.edit.title}">edit</span>
-                    <span th:case="true" th:text="#{person.settings.title}">settings</span>
-                 </span>
-            </span>
-        </h1>
+        <h1 th:text="#{person.add.title}"></h1>
         <br>
 
         <input type="hidden" th:field="*{id}"/>
