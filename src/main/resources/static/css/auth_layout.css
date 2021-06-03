@@ -20,3 +20,11 @@ a.boots-ico {
 body {
     padding-top: 70px;
 }
+
+.pageTitle {
+    position: fixed;
+    top: 70px;
+    left: 16px;
+    font-size: 18px;
+    color: rgba(255, 255, 255, .5);
+}
