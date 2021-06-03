@@ -17,6 +17,10 @@
                     <span th:case="false" th:text="#{person.edit.title}">edit</span>
                     <span th:case="true" th:text="#{person.settings.title}">settings</span>
     </h1>
+
+    <a th:href="@{/persons/editPassword(id=${person.id})}" class="btn btn-secondary fw-bold un-line float-md-end"
+       th:text="#{btn.password}"></a>
+    <br>
     <br>
 
     <input type="hidden" th:field="*{id}"/>

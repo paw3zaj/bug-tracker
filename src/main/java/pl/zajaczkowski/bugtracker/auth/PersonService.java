@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.zajaczkowski.bugtracker.EditPassword;
 import pl.zajaczkowski.bugtracker.auth.interfaces.AuthorityRepository;
 import pl.zajaczkowski.bugtracker.auth.interfaces.PersonRepository;
 
@@ -89,5 +90,11 @@ public class PersonService {
 
     Iterable<Authority> findAllAuthorities() {
         return authorityRepository.findAll();
+    }
+
+    public void updatePassword(EditPassword editPassword) {
+        var person = personRepository.findById(editPassword.getId()).orElse(null);
+        person.setPassword(bCryptPasswordEncoder.encode(editPassword.getPassword()));
+        personRepository.save(person);
     }
 }
