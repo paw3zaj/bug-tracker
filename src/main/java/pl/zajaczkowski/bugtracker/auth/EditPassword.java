@@ -1,4 +1,4 @@
-package pl.zajaczkowski.bugtracker;
+package pl.zajaczkowski.bugtracker.auth;
 
 import lombok.Getter;
 import lombok.Setter;

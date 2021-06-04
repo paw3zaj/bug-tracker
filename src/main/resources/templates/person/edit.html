@@ -11,14 +11,14 @@
 
 
   <form class="login-form"
-        th:action="@{/persons/update}" th:object="${person}" method="post">
+        th:action="@{/persons/update}" th:object="${editPerson}" method="post">
 
-    <h1 th:switch="${person.settings}">
+    <h1 th:switch="${editPerson.settings}">
                     <span th:case="false" th:text="#{person.edit.title}">edit</span>
                     <span th:case="true" th:text="#{person.settings.title}">settings</span>
     </h1>
 
-    <a th:href="@{/persons/editPassword(id=${person.id})}" class="btn btn-secondary fw-bold un-line float-md-end"
+    <a th:href="@{/persons/editPassword(id=${editPerson.id})}" class="btn btn-secondary fw-bold un-line float-md-end"
        th:text="#{btn.password}"></a>
     <br>
     <br>

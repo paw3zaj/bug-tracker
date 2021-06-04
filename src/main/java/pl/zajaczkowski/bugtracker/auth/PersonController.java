@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.zajaczkowski.bugtracker.EditPassword;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -69,7 +68,7 @@ public class PersonController {
         , person.getAuthorities());
 
         model.addAttribute("authorities", personService.findAllAuthorities());
-        model.addAttribute("person", editPerson);
+        model.addAttribute("editPerson", editPerson);
         return "person/edit";
     }
 
@@ -78,7 +77,7 @@ public class PersonController {
     public String update(@Valid EditPerson editPerson, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("authorities", personService.findAllAuthorities());
-            model.addAttribute("person", editPerson);
+            model.addAttribute("editPerson", editPerson);
             return "person/edit";
         }
 
