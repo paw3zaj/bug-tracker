@@ -56,9 +56,6 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities;
 
-    @Transient
-    private Boolean settings = false;
-
     public Person(String login, String password, String userRealName) {
         this.login = login;
         this.password = password;

@@ -88,12 +88,20 @@ public class PersonController {
     @GetMapping("/settings")
     String showUserSettings(Principal principal, Model model) {
         String login = principal.getName();
-        Person person = personService.findPersonByLogin(login).orElseThrow();
-        person.setSettings(true);
+        Person person = personService.findPersonByLogin(login).orElse(null);
+        if(person == null) {
+            return "redirect:/persons";
+        }
 
-        model.addAttribute("authorities", personService.findAllAuthorities());
-        model.addAttribute("person", person);
-        return "person/add";
+        var editPerson = new EditPerson(person.getId(), person.getLogin(), person.getUserRealName()
+                , person.getEmail(), person.getPhoneNumber()
+                , null);
+
+        editPerson.setSettings(true);
+
+        model.addAttribute("authorities", null);
+        model.addAttribute("editPerson", editPerson);
+        return "person/edit";
     }
 
     @GetMapping("/editPassword")
