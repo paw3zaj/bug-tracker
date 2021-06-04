@@ -2,11 +2,11 @@ package pl.zajaczkowski.bugtracker.auth;
 
 import lombok.Getter;
 import lombok.Setter;
-import pl.zajaczkowski.bugtracker.validators.ValidEditPasswords;
+import pl.zajaczkowski.bugtracker.validators.ValidPasswords;
 
 import javax.validation.constraints.Size;
 
-@ValidEditPasswords
+@ValidPasswords
 @Getter
 @Setter
 public class EditPassword {

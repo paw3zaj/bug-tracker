@@ -5,7 +5,7 @@ import pl.zajaczkowski.bugtracker.auth.EditPassword;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class ValidEditPasswordsValidator implements ConstraintValidator<ValidEditPasswords, EditPassword> {
+public class ValidEditPasswordsValidator implements ConstraintValidator<ValidPasswords, EditPassword> {
 
     @Override
     public boolean isValid(EditPassword editPassword, ConstraintValidatorContext ctx) {

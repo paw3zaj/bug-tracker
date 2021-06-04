@@ -24,13 +24,11 @@ public class Person {
     @GeneratedValue
     private Long id;
 
-    @NotEmpty
     @Size(min = 4)
     @Column(nullable = false, unique = true, length = 10)
     private String login;
 
     @JsonIgnore
-    @NotEmpty
     @Size(min = 8)
     @Column(nullable = false)
     private String password;
@@ -43,7 +41,6 @@ public class Person {
     @ColumnDefault(value = "true")
     private Boolean enabled = true;
 
-    @NotEmpty
     @Size(min = 5)
     @Column(nullable = false)
     private String userRealName;
