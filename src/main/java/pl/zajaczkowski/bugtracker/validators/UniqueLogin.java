@@ -9,10 +9,9 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = LoginUniquenessValidator.class)
+@Constraint(validatedBy = {LoginUniquenessValidator.class, EditLoginUniquenessValidator.class})
 public @interface UniqueLogin {
     String message() default "{login.unique.error}";
-
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

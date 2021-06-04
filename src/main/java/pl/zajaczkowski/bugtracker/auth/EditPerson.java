@@ -3,24 +3,23 @@ package pl.zajaczkowski.bugtracker.auth;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.zajaczkowski.bugtracker.validators.UniqueLogin;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
 @NoArgsConstructor
+@UniqueLogin
 @Setter
 @Getter
 public class EditPerson {
 
     private Long id;
 
-    @NotEmpty
     @Size(min = 4)
     private String login;
 
-    @NotEmpty
     @Size(min = 5)
     private String userRealName;
 
