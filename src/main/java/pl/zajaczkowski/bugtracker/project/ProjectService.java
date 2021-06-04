@@ -22,7 +22,7 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    Optional<Project> findProjectById(Long id) {
+    public Optional<Project> findProjectById(Long id) {
         return projectRepository.findById(id);
     }
 
