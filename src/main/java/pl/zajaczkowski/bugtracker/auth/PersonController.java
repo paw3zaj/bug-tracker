@@ -21,8 +21,14 @@ public class PersonController {
 
     @GetMapping
     @Secured({"ROLE_MANAGE_USERS", "ROLE_USERS_TAB"})
-    String showPersonList(Model model) {
+    String showPersonList(Principal principal, Model model) {
+        String login = principal.getName();
+
+        var access = personService.checkAccess(login, AuthorityName.ROLE_MANAGE_USERS)
+                || personService.checkAccess(login, AuthorityName.ROLE_USERS_TAB);
+
         Iterable<Person> personList = personService.findAllPersons();
+        model.addAttribute("access", access);
         model.addAttribute("persons", personList);
         return "person/persons";
     }
@@ -81,7 +87,7 @@ public class PersonController {
         }
 
         personService.savePerson(editPerson);
-        return "redirect:/persons";
+        return "redirect:/projects";
     }
 
     @GetMapping("/settings")
@@ -89,7 +95,7 @@ public class PersonController {
         String login = principal.getName();
         Person person = personService.findPersonByLogin(login).orElse(null);
         if(person == null) {
-            return "redirect:/persons";
+            return "redirect:/projects";
         }
 
         var editPerson = new EditPerson(person.getId(), person.getLogin(), person.getUserRealName()

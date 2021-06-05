@@ -96,4 +96,16 @@ public class PersonService {
         person.setPassword(bCryptPasswordEncoder.encode(editPassword.getPassword()));
         personRepository.save(person);
     }
+
+    public boolean checkAccess(String login, AuthorityName name) {
+        var person = findPersonByLogin(login);
+        if(person.isEmpty()) {
+            return false;
+        }
+        var auth= person.get().getAuthorities();
+        if(auth.contains(name)) {
+            return true;
+        }
+        return false;
+    }
 }
