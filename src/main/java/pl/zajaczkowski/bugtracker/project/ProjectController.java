@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.zajaczkowski.bugtracker.auth.AuthorityName;
+import pl.zajaczkowski.bugtracker.auth.PersonService;
 import pl.zajaczkowski.bugtracker.issue.IssueService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/projects")
@@ -18,15 +21,21 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final IssueService issueService;
+    private final PersonService personService;
 
-    public ProjectController(ProjectService projectService, IssueService issueService) {
+    public ProjectController(ProjectService projectService, IssueService issueService, PersonService personService) {
         this.projectService = projectService;
         this.issueService = issueService;
+        this.personService = personService;
     }
 
     @GetMapping
-    String showProjectsList(Model model) {
+    String showProjectsList(Principal principal, Model model) {
+        var login = principal.getName();
+        var access = personService.checkAccess(login, AuthorityName.ROLE_MANAGE_PROJECT);
+
         model.addAttribute("projects", projectService.findAllProjects());
+        model.addAttribute("access", access);
         return "project/projects";
     }
 
