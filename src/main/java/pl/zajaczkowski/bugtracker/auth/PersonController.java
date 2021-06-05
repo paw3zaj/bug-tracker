@@ -22,10 +22,8 @@ public class PersonController {
     @GetMapping
     @Secured({"ROLE_MANAGE_USERS", "ROLE_USERS_TAB"})
     String showPersonList(Principal principal, Model model) {
-        String login = principal.getName();
-
-        var access = personService.checkAccess(login, AuthorityName.ROLE_MANAGE_USERS)
-                || personService.checkAccess(login, AuthorityName.ROLE_USERS_TAB);
+        var login = principal.getName();
+        var access = personService.checkAccess(login, AuthorityName.ROLE_MANAGE_USERS);
 
         Iterable<Person> personList = personService.findAllPersons();
         model.addAttribute("access", access);

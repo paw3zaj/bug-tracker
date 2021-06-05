@@ -102,10 +102,12 @@ public class PersonService {
         if(person.isEmpty()) {
             return false;
         }
-        var auth= person.get().getAuthorities();
-        if(auth.contains(name)) {
-            return true;
+        var authority = authorityRepository.findByName(name);
+        if(authority.isEmpty()){
+            return false;
         }
-        return false;
+        var authorities= person.get().getAuthorities();
+
+        return authorities.contains(authority.get());
     }
 }
