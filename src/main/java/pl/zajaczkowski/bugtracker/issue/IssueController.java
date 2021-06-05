@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.zajaczkowski.bugtracker.auth.AuthorityName;
 import pl.zajaczkowski.bugtracker.auth.Person;
 import pl.zajaczkowski.bugtracker.auth.PersonService;
 import pl.zajaczkowski.bugtracker.mail.MailService;
@@ -56,8 +57,12 @@ public class IssueController {
     }
 
     @GetMapping
-    String showIssueList(@ModelAttribute IssueFilter issueFilter, Model model) {
+    String showIssueList(@ModelAttribute IssueFilter issueFilter, Principal principal, Model model) {
+        var login = principal.getName();
+        var access = personService.checkAccess(login, AuthorityName.ROLE_MANAGE_PROJECT);
+
         model.addAttribute("issues", issueService.findAllIssues(issueFilter));
+        model.addAttribute("access", access);
         model.addAttribute("filter", issueFilter);
         return "issue/issues";
     }

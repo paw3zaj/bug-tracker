@@ -12,7 +12,7 @@
     <div class="pageTitle" th:text="#{layout.menu.issues}"></div>
 
     <div>
-        <a href="add.html" th:href="@{/issues/add}" class="boots-ico float-md-end"
+        <a th:if="${access}" th:href="@{/issues/add}" class="boots-ico float-md-end"
            data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on top">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-square"
                  viewBox="0 0 16 16">
@@ -21,7 +21,7 @@
             </svg>
         </a>
     </div>
-<br>
+    <br>
     <br>
     <section>
         <form th:action="@{/issues}" th:object="${filter}"
@@ -135,10 +135,12 @@
                 </td>
                 <td th:text="${{issue.dateCreated}}">date</td>
                 <td>
+                    <span th:if="${access}">
                     <a href="about" th:href="@{/issues/remove(id=${issue.id})}" class="btn-lg btn-secondary fw-bold
                  border-white bg-white un-line no-line" th:text="#{btn.remove}">remove issue</a>
                     <a href="about" th:href="@{/issues/edit(id=${issue.id})}" class="btn-lg btn-secondary fw-bold
                  border-white bg-white un-line no-line" th:text="#{btn.edit}">edit issue</a>
+                        </span>
                 </td>
             </tr>
             </tbody>
