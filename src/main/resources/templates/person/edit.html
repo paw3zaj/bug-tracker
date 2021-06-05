@@ -34,7 +34,7 @@
     <div class="form-group">
       <label for="input-login" class="form-label" th:text="#{person.add.login}">login</label>
       <input th:class="'form-control ' + ${#fields.hasErrors('login') ? 'is-invalid' : ''}"
-             id="input-login" th:field="*{login}"/>
+             id="input-login" th:field="*{login}" th:readonly="${editPerson.settings}"/>
       <small th:if="${#fields.hasErrors('login')}" th:errors="*{login}"
              class="text-danger"></small>
     </div>
