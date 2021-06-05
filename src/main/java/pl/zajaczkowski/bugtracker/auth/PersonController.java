@@ -73,7 +73,6 @@ public class PersonController {
     }
 
     @PostMapping("/update")
-    @Secured("ROLE_MANAGE_USERS")
     public String update(@Valid EditPerson editPerson, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("authorities", personService.findAllAuthorities());
@@ -95,7 +94,7 @@ public class PersonController {
 
         var editPerson = new EditPerson(person.getId(), person.getLogin(), person.getUserRealName()
                 , person.getEmail(), person.getPhoneNumber()
-                , null);
+                , person.getAuthorities());
 
         editPerson.setSettings(true);
 
@@ -113,7 +112,7 @@ public class PersonController {
     }
 
     @PostMapping("/updatePassword")
-    public String updatePassword(@RequestParam Long id, @Valid EditPassword editPassword,
+    public String updatePassword(@Valid EditPassword editPassword,
                                  BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("editPassword", editPassword);
@@ -121,6 +120,6 @@ public class PersonController {
         }
 
         personService.updatePassword(editPassword);
-        return "redirect:/persons/edit?id=" + id;
+        return "redirect:/persons/settings";
     }
 }

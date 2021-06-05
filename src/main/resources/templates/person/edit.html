@@ -54,12 +54,15 @@
              class="text-danger"></small>
     </div>
     <br>
+      <span th:unless="${editPerson.settings}">
     <div class="form-check form-check-inline" th:each="authority : ${authorities}">
       <input class="form-check-input" type="checkbox" th:value="${authority.id}"
              th:field="*{authorities}"/>
       <label class="form-check-label" th:text="#{${'authority.' + authority.name}}"
              th:for="${#ids.prev('authorities')}"></label>
     </div>
+          </span>
+      <input th:if="${editPerson.settings}" type="hidden" th:field="*{authorities}"/>
     <div class="mt-3">
       <a class="btn btn-lg btn-secondary fw-bold border-white bg-white un-line"
          th:href="@{/persons}"
