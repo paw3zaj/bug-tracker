@@ -63,6 +63,7 @@ public class IssueController {
 
         model.addAttribute("issues", issueService.findAllIssues(issueFilter));
         model.addAttribute("access", access);
+        model.addAttribute("currentPage", "issues");
         model.addAttribute("filter", issueFilter);
         return "issue/issues";
     }
@@ -70,6 +71,8 @@ public class IssueController {
     @GetMapping("/add")
     @Secured("ROLE_MANAGE_PROJECT")
     String showAdd(Model model) {
+
+        model.addAttribute("currentPage", "issues");
         model.addAttribute("issue", new Issue());
         return "issue/add";
     }
@@ -81,6 +84,8 @@ public class IssueController {
         if (issue == null) {
             return "redirect:/issues";
         }
+
+        model.addAttribute("currentPage", "issues");
         model.addAttribute("issue", issue);
         return "issue/add";
     }

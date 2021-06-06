@@ -7,7 +7,6 @@
 <body>
 
 <div layout:fragment="main-content">
-    <div class="pageTitle" th:text="#{layout.menu.projects}"></div>
 
     <a th:if="${access}" th:href="@{/projects/add}" class="boots-ico justify-content-center float-md-end"
        data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on top">

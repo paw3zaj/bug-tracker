@@ -36,12 +36,15 @@ public class ProjectController {
 
         model.addAttribute("projects", projectService.findAllProjects());
         model.addAttribute("access", access);
+        model.addAttribute("currentPage", "projects");
         return "project/projects";
     }
 
     @GetMapping("/add")
     @Secured("ROLE_MANAGE_PROJECT")
     String showAdd(Model model) {
+
+        model.addAttribute("currentPage", "projects");
         model.addAttribute("project", new Project());
         return "project/add";
     }
@@ -53,6 +56,8 @@ public class ProjectController {
         if (project == null) {
             return "redirect:/projects";
         }
+
+        model.addAttribute("currentPage", "projects");
         model.addAttribute("project", project);
         return "project/add";
     }

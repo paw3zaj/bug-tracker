@@ -27,6 +27,7 @@ public class PersonController {
 
         Iterable<Person> personList = personService.findAllPersons();
         model.addAttribute("access", access);
+        model.addAttribute("currentPage", "persons");
         model.addAttribute("persons", personList);
         return "person/persons";
     }
@@ -42,6 +43,7 @@ public class PersonController {
     @Secured("ROLE_MANAGE_USERS")
     String showAdd(Model model) {
         model.addAttribute("authorities", personService.findAllAuthorities());
+        model.addAttribute("currentPage", "persons");
         model.addAttribute("person", new Person());
         return "person/add";
     }
@@ -51,6 +53,7 @@ public class PersonController {
     public String save(@Valid Person person, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("authorities", personService.findAllAuthorities());
+            model.addAttribute("currentPage", "persons");
             model.addAttribute("person", person);
             return "person/add";
         }
@@ -72,6 +75,7 @@ public class PersonController {
         , person.getAuthorities());
 
         model.addAttribute("authorities", personService.findAllAuthorities());
+        model.addAttribute("currentPage", "persons");
         model.addAttribute("editPerson", editPerson);
         return "person/edit";
     }
@@ -103,6 +107,7 @@ public class PersonController {
         editPerson.setSettings(true);
 
         model.addAttribute("authorities", null);
+        model.addAttribute("currentPage", "persons");
         model.addAttribute("editPerson", editPerson);
         return "person/edit";
     }
@@ -111,6 +116,8 @@ public class PersonController {
     public String showEditPass(@RequestParam Long id, Model model) {
         var editPassword = new EditPassword();
         editPassword.setId(id);
+
+        model.addAttribute("currentPage", "persons");
         model.addAttribute("editPassword", editPassword);
         return "person/password";
     }
