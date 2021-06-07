@@ -8,8 +8,6 @@
 
 <div layout:fragment="main-content">
 
-
-
   <form class="login-form"
         th:action="@{/persons/update}" th:object="${editPerson}" method="post">
 
@@ -24,6 +22,7 @@
     <br>
 
     <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{settings}">
     <div class="form-group">
       <label for="input-real_name" class="form-label" th:text="#{person.add.user_real_name}">real name</label>
       <input th:class="'form-control ' + ${#fields.hasErrors('userRealName') ? 'is-invalid' : ''}"
@@ -34,7 +33,7 @@
     <div class="form-group">
       <label for="input-login" class="form-label" th:text="#{person.add.login}">login</label>
       <input th:class="'form-control ' + ${#fields.hasErrors('login') ? 'is-invalid' : ''}"
-             id="input-login" th:field="*{login}"/>
+             id="input-login" th:field="*{login}" th:readonly="${editPerson.settings}"/>
       <small th:if="${#fields.hasErrors('login')}" th:errors="*{login}"
              class="text-danger"></small>
     </div>
@@ -54,14 +53,21 @@
              class="text-danger"></small>
     </div>
     <br>
-    <div class="form-check form-check-inline" th:each="authority : ${authorities}">
+    <div class="form-check form-check-inline" th:unless="${editPerson.settings}" th:each="authority : ${authorities}">
       <input class="form-check-input" type="checkbox" th:value="${authority.id}"
              th:field="*{authorities}"/>
       <label class="form-check-label" th:text="#{${'authority.' + authority.name}}"
              th:for="${#ids.prev('authorities')}"></label>
     </div>
+      <input th:if="${editPerson.settings}" type="hidden" th:field="*{authorities}"/>
     <div class="mt-3">
       <a class="btn btn-lg btn-secondary fw-bold border-white bg-white un-line"
+         th:if="${editPerson.settings}"
+         th:href="@{/projects}"
+         th:text="#{btn.cancel}">cancel
+      </a>
+      <a class="btn btn-lg btn-secondary fw-bold border-white bg-white un-line"
+         th:unless="${editPerson.settings}"
          th:href="@{/persons}"
          th:text="#{btn.cancel}">cancel
       </a>

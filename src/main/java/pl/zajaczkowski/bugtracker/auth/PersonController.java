@@ -21,8 +21,15 @@ public class PersonController {
 
     @GetMapping
     @Secured({"ROLE_MANAGE_USERS", "ROLE_USERS_TAB"})
-    String showPersonList(Model model) {
-        Iterable<Person> personList = personService.findAllPersons();
+    String showPersonList(Principal principal, Model model) {
+        var login = principal.getName();
+        var access = personService.checkAccess(login, AuthorityName.ROLE_MANAGE_USERS);
+        var permission = personService.hasPermission(login);
+        var personList = personService.findAllPersons();
+
+        model.addAttribute("access", access);
+        model.addAttribute("permission", permission);
+        model.addAttribute("currentPage", "persons");
         model.addAttribute("persons", personList);
         return "person/persons";
     }
@@ -36,8 +43,12 @@ public class PersonController {
 
     @GetMapping("/add")
     @Secured("ROLE_MANAGE_USERS")
-    String showAdd(Model model) {
+    String showAdd(Principal principal, Model model) {
+        var permission = personService.hasPermission(principal.getName());
+
         model.addAttribute("authorities", personService.findAllAuthorities());
+        model.addAttribute("permission", permission);
+        model.addAttribute("currentPage", "persons");
         model.addAttribute("person", new Person());
         return "person/add";
     }
@@ -47,6 +58,7 @@ public class PersonController {
     public String save(@Valid Person person, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("authorities", personService.findAllAuthorities());
+            model.addAttribute("currentPage", "persons");
             model.addAttribute("person", person);
             return "person/add";
         }
@@ -57,23 +69,25 @@ public class PersonController {
 
     @GetMapping("/edit")
     @Secured("ROLE_MANAGE_USERS")
-    public String showEdit(@RequestParam Long id, Model model) {
+    public String showEdit(@RequestParam Long id,Principal principal, Model model) {
         var person = personService.findById(id).orElse(null);
         if(person == null) {
             return "redirect:/persons";
         }
 
+        var permission = personService.hasPermission(principal.getName());
         var editPerson = new EditPerson(person.getId(), person.getLogin(), person.getUserRealName()
                 , person.getEmail(), person.getPhoneNumber()
         , person.getAuthorities());
 
         model.addAttribute("authorities", personService.findAllAuthorities());
+        model.addAttribute("currentPage", "persons");
+        model.addAttribute("permission", permission);
         model.addAttribute("editPerson", editPerson);
         return "person/edit";
     }
 
     @PostMapping("/update")
-    @Secured("ROLE_MANAGE_USERS")
     public String update(@Valid EditPerson editPerson, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("authorities", personService.findAllAuthorities());
@@ -82,6 +96,10 @@ public class PersonController {
         }
 
         personService.savePerson(editPerson);
+
+        if(editPerson.getSettings()) {
+            return "redirect:/projects";
+        }
         return "redirect:/persons";
     }
 
@@ -90,30 +108,38 @@ public class PersonController {
         String login = principal.getName();
         Person person = personService.findPersonByLogin(login).orElse(null);
         if(person == null) {
-            return "redirect:/persons";
+            return "redirect:/projects";
         }
 
+        var permission = personService.hasPermission(login);
         var editPerson = new EditPerson(person.getId(), person.getLogin(), person.getUserRealName()
                 , person.getEmail(), person.getPhoneNumber()
-                , null);
+                , person.getAuthorities());
 
         editPerson.setSettings(true);
 
         model.addAttribute("authorities", null);
+        model.addAttribute("currentPage", "persons");
+        model.addAttribute("permission", permission);
         model.addAttribute("editPerson", editPerson);
         return "person/edit";
     }
 
     @GetMapping("/editPassword")
-    public String showEditPass(@RequestParam Long id, Model model) {
+    public String showEditPass(@RequestParam Long id, Principal principal, Model model) {
         var editPassword = new EditPassword();
         editPassword.setId(id);
+
+        var permission = personService.hasPermission(principal.getName());
+
+        model.addAttribute("currentPage", "persons");
+        model.addAttribute("permission", permission);
         model.addAttribute("editPassword", editPassword);
         return "person/password";
     }
 
     @PostMapping("/updatePassword")
-    public String updatePassword(@RequestParam Long id, @Valid EditPassword editPassword,
+    public String updatePassword(@Valid EditPassword editPassword,
                                  BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("editPassword", editPassword);
@@ -121,6 +147,6 @@ public class PersonController {
         }
 
         personService.updatePassword(editPassword);
-        return "redirect:/persons/edit?id=" + id;
+        return "redirect:/persons/settings";
     }
 }

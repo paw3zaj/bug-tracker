@@ -96,4 +96,24 @@ public class PersonService {
         person.setPassword(bCryptPasswordEncoder.encode(editPassword.getPassword()));
         personRepository.save(person);
     }
+
+    public boolean checkAccess(String login, AuthorityName name) {
+        var person = findPersonByLogin(login);
+        if(person.isEmpty()) {
+            return false;
+        }
+        var authority = authorityRepository.findByName(name);
+        if(authority.isEmpty()){
+            return false;
+        }
+        var authorities= person.get().getAuthorities();
+
+        return authorities.contains(authority.get());
+    }
+
+    public boolean hasPermission(String login) {
+        var roleUsers = checkAccess(login, AuthorityName.ROLE_MANAGE_USERS);
+        var roleTab = checkAccess(login, AuthorityName.ROLE_USERS_TAB);
+        return roleUsers || roleTab;
+    }
 }
