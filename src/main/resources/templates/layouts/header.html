@@ -19,6 +19,7 @@
                               </li>
                               <li class="nav-item">
                                 <a class="nav-link un-line"
+                                   th:if="${permission}"
                                    th:classappend="${currentPage == 'persons'} ? 'active'" th:href="@{/persons}"
                                    th:text="#{layout.menu.users}">Users</a>
                               </li>

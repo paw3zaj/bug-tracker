@@ -33,31 +33,37 @@ public class ProjectController {
     String showProjectsList(Principal principal, Model model) {
         var login = principal.getName();
         var access = personService.checkAccess(login, AuthorityName.ROLE_MANAGE_PROJECT);
+        var permission = personService.hasPermission(login);
 
         model.addAttribute("projects", projectService.findAllProjects());
         model.addAttribute("access", access);
+        model.addAttribute("permission", permission);
         model.addAttribute("currentPage", "projects");
         return "project/projects";
     }
 
     @GetMapping("/add")
     @Secured("ROLE_MANAGE_PROJECT")
-    String showAdd(Model model) {
+    String showAdd(Principal principal, Model model) {
+        var permission = personService.hasPermission(principal.getName());
 
         model.addAttribute("currentPage", "projects");
+        model.addAttribute("permission", permission);
         model.addAttribute("project", new Project());
         return "project/add";
     }
 
     @GetMapping("/edit")
     @Secured("ROLE_MANAGE_PROJECT")
-    public String showUpdate(@RequestParam Long id, Model model) {
+    public String showUpdate(@RequestParam Long id, Principal principal, Model model) {
         var project = projectService.findProjectById(id).orElse(null);
         if (project == null) {
             return "redirect:/projects";
         }
+        var permission = personService.hasPermission(principal.getName());
 
         model.addAttribute("currentPage", "projects");
+        model.addAttribute("permission", permission);
         model.addAttribute("project", project);
         return "project/add";
     }

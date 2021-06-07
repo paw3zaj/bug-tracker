@@ -110,4 +110,10 @@ public class PersonService {
 
         return authorities.contains(authority.get());
     }
+
+    public boolean hasPermission(String login) {
+        var roleUsers = checkAccess(login, AuthorityName.ROLE_MANAGE_USERS);
+        var roleTab = checkAccess(login, AuthorityName.ROLE_USERS_TAB);
+        return roleUsers || roleTab;
+    }
 }
