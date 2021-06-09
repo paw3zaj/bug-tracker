@@ -74,16 +74,6 @@
                                 th:text="#{${'priority.' + priority.name}}"></option>
                     </select>
                 </div>
-                <div class="col-2">
-                    <select th:field="*{type}"
-                            class="form-control"
-                            onchange="this.form.submit()">
-                        <option th:value="${null}" th:text="#{issue.filter.type}"></option>
-                        <option th:each="type : ${types}"
-                                th:value="${type.id}"
-                                th:text="#{${'type.' + type.name}}"></option>
-                    </select>
-                </div>
             </div>
         </form>
 
@@ -98,7 +88,6 @@
                 <th th:text="#{issue.assignee}">assignee</th>
                 <th th:text="#{issue.status}">status</th>
                 <th th:text="#{issue.priority}">priority</th>
-                <th th:text="#{issue.type}">type</th>
                 <th th:text="#{issue.dateCreated}">date</th>
                 <th>
                     <a th:href="@{/issues}" class="btn btn-secondary fw-bold un-line"
@@ -126,10 +115,6 @@
                 <td>
                 <span th:if="${issue.priority != null}"
                       th:text="#{${'priority.' + issue.priority.name}}">priority</span>
-                </td>
-                <td>
-                <span th:if="${issue.type != null}"
-                      th:text="#{${'type.' + issue.type.name}}">type</span>
                 </td>
                 <td th:text="${{issue.dateCreated}}">date</td>
                 <td>
