@@ -100,6 +100,10 @@ public class IssueController {
     @Secured("ROLE_MANAGE_PROJECT")
     public String save(@Valid Issue issue, BindingResult result, Principal principal, Model model) {
         if (result.hasErrors()) {
+            var permission = personService.hasPermission(principal.getName());
+
+            model.addAttribute("currentPage", "issues");
+            model.addAttribute("permission", permission);
             model.addAttribute("issue", issue);
             return "issue/add";
         }

@@ -70,8 +70,13 @@ public class ProjectController {
 
     @PostMapping("/save")
     @Secured("ROLE_MANAGE_PROJECT")
-    public String save(@Valid Project project, BindingResult result, Model model) {
+    public String save(@Valid Project project, BindingResult result, Principal principal, Model model) {
         if (result.hasErrors()) {
+            var permission = personService.hasPermission(principal.getName());
+
+            model.addAttribute("currentPage", "projects");
+            model.addAttribute("permission", permission);
+
             model.addAttribute("project", project);
             return "project/add";
         }
