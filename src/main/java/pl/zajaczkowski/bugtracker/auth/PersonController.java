@@ -57,7 +57,9 @@ public class PersonController {
     @Secured("ROLE_MANAGE_USERS")
     public String save(@Valid Person person, BindingResult result, Model model) {
         if (result.hasErrors()) {
+
             model.addAttribute("authorities", personService.findAllAuthorities());
+            model.addAttribute("permission", true);
             model.addAttribute("currentPage", "persons");
             model.addAttribute("person", person);
             return "person/add";
@@ -88,9 +90,13 @@ public class PersonController {
     }
 
     @PostMapping("/update")
-    public String update(@Valid EditPerson editPerson, BindingResult result, Model model) {
+    public String update(@Valid EditPerson editPerson, BindingResult result, Principal principal, Model model) {
         if (result.hasErrors()) {
+            var permission = personService.hasPermission(principal.getName());
+
             model.addAttribute("authorities", personService.findAllAuthorities());
+            model.addAttribute("currentPage", "persons");
+            model.addAttribute("permission", permission);
             model.addAttribute("editPerson", editPerson);
             return "person/edit";
         }
@@ -140,8 +146,12 @@ public class PersonController {
 
     @PostMapping("/updatePassword")
     public String updatePassword(@Valid EditPassword editPassword,
-                                 BindingResult result, Model model) {
+                                 BindingResult result, Principal principal, Model model) {
         if (result.hasErrors()) {
+            var permission = personService.hasPermission(principal.getName());
+
+            model.addAttribute("currentPage", "persons");
+            model.addAttribute("permission", permission);
             model.addAttribute("editPassword", editPassword);
             return "person/password";
         }
